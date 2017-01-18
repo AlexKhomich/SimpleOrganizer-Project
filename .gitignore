@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.gradle/
+.idea/
+app/build/
+app/libs/
+app/src/androidTest/
+app/src/main/res/drawable-nodpi/
+app/src/main/res/drawable-v24/
+build/
+gradle/

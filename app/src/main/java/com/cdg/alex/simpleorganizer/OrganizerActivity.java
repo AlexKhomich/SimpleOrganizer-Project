@@ -89,15 +89,10 @@ public class OrganizerActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 
-
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -106,17 +101,17 @@ public class OrganizerActivity extends AppCompatActivity {
 
             Fragment myFragment = null;
 
-                if(position == 0) {
-                    myFragment = DateAndTimeFragment.newInstance(position);
+            if (position == 0) {
+                myFragment = DateAndTimeFragment.newInstance(position);
 
-                } else if(position == 1) {
-                    myFragment = AlarmFragment.newInstance(position);
+            } else if (position == 1) {
+                myFragment = AlarmFragment.newInstance(position);
 
-                } else if(position == 2) {
-                    myFragment = NoteFragment.newInstance(position);
+            } else if (position == 2) {
+                myFragment = NoteFragment.newInstance(position);
 
-                }
-           return myFragment;
+            }
+            return myFragment;
         }
 
         @Override
@@ -124,7 +119,6 @@ public class OrganizerActivity extends AppCompatActivity {
             // Show 3 total pages.
             return 3;
         }
-
 
 
         @Override

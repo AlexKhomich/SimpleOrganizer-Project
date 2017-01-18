@@ -11,9 +11,6 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-/**
- * Created by alex on 26/10/16.
- */
 
 public class DateAndTimeFragment extends Fragment {
 
