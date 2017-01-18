@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Simple Organizer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="alarmsTab">Alarms</string>
+    <string name="notesTab">Notes</string>
+    <string name="dateAndTimeTab"><![CDATA[Date & Time]]></string>
+    <string name="alarms">Alarms</string>
+    <string name="notes">Notes</string>
+    <string name="back">back</string>
+
+    <string-array name="snoozeTimeItems">
+        <item>1 min</item>
+        <item>5 min</item>
+        <item>10 min</item>
+        <item>15 min</item>
+        <item>20 min</item>
+        <item>25 min</item>
+        <item>35 min</item>
+    </string-array>
+
+    <string-array name="silenceAfterItems">
+        <item>1 min</item>
+        <item>2 min</item>
+        <item>5 min</item>
+        <item>10 min</item>
+        <item>15 min</item>
+        <item>20 min</item>
+    </string-array>
+
+    <string-array name="daysOfPeriod">
+        <item>MONDAY</item>
+        <item>TUESDAY</item>
+        <item>WEDNESDAY</item>
+        <item>THURSDAY</item>
+        <item>FRIDAY</item>
+        <item>SATURDAY</item>
+        <item>SUNDAY</item>
+    </string-array>
+
+</resources>

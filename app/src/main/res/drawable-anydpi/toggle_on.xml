@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+        <!-- Overlap the left, top and right border using background color  -->
+        <item android:bottom="5dp">
+                <shape android:shape="oval">
+                        <solid android:color="#6170c2"/>
+                </shape>
+        </item>
+</layer-list>
