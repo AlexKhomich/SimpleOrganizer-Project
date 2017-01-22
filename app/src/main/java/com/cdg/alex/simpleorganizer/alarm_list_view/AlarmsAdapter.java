@@ -2,10 +2,13 @@ package com.cdg.alex.simpleorganizer.alarm_list_view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.design.widget.Snackbar;
@@ -28,6 +31,7 @@ import com.cdg.alex.simpleorganizer.AlarmParser;
 import com.cdg.alex.simpleorganizer.PeriodSetter;
 import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.SoundPickerDialog;
+import com.cdg.alex.simpleorganizer.receiver.AlarmReceiver;
 import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsString;
 
 import org.jaudiotagger.audio.AudioFile;
@@ -46,6 +50,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -140,7 +145,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
         holder.setRingtoneView.setText(alarmSettingsLoader.getSetRingtoneView());
         holder.setPeriodView.setText(alarmSettingsLoader.getSetPeriodView());
 
-
         //проверка на установленный чекбокс
         if (!(holder.checkPeriod.isChecked())) {
             holder.setPeriodView.setTextColor(context.getResources().getColor(R.color.color_not_active_text));
@@ -149,6 +153,25 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             holder.setPeriodView.setTextColor(context.getResources().getColor(R.color.colorPrimaryText));
             holder.settingsButton.setImageDrawable(context.getDrawable(R.drawable.settings));
         }
+
+        holder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar calendar = Calendar.getInstance();
+                Intent intent = new Intent(context, AlarmReceiver.class);
+                String time = holder.timeTextView.getText().toString();
+                String[] strArr = time.split(":");
+                int hour = Integer.parseInt(strArr[0]);
+                int minute = Integer.parseInt(strArr[1]);
+
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        });
 
 //        on/off switch
         holder.onOfSwitch.setOnClickListener(new View.OnClickListener() {

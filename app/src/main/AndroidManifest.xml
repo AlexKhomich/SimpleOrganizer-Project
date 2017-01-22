@@ -30,7 +30,18 @@
         <service
             android:name=".service.MediaPlayerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:process=":media_player_service">
+
+        </service>
+
+        <receiver android:name=".receiver.AlarmReceiver">
+
+        </receiver>
+
+        <activity android:name=".AlarmNotificationActivity"
+            android:noHistory="true">
+        </activity>
     </application>
 
 </manifest>
