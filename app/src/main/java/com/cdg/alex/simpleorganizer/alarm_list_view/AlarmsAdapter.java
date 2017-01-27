@@ -154,6 +154,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             holder.settingsButton.setImageDrawable(context.getDrawable(R.drawable.settings));
         }
 
+//        test function
         holder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

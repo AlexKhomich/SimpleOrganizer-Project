@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".notes.NoteFragment"
+    tools:context=".fragments.NoteFragment"
     android:background="@color/colorPrimary">
 
     <android.support.design.widget.FloatingActionButton

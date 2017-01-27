@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.IBinder
-import com.cdg.alex.simpleorganizer.AlarmNotificationActivity
 import com.cdg.alex.simpleorganizer.R
+import com.cdg.alex.simpleorganizer.activities.AlarmNotificationActivity
 
 
 class MediaPlayerService : Service() {

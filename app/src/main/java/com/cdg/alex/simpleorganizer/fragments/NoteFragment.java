@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer.notes;
+package com.cdg.alex.simpleorganizer.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

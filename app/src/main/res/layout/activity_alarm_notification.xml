@@ -5,7 +5,7 @@
     android:id="@+id/activity_alarm_notification"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cdg.alex.simpleorganizer.AlarmNotificationActivity">
+    tools:context="com.cdg.alex.simpleorganizer.activities.AlarmNotificationActivity">
 
     <Button
         android:text="Snooze"

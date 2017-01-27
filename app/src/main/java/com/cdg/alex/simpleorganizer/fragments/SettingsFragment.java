@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer;
+package com.cdg.alex.simpleorganizer.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.settings_list_view.SettingsAdapter;
 import com.cdg.alex.simpleorganizer.settings_list_view.SettingsLoader;
 

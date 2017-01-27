@@ -3,6 +3,7 @@ package com.cdg.alex.simpleorganizer;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cdg.alex.simpleorganizer.fragments.AlarmFragment;
 import com.cdg.alex.simpleorganizer.service.JsonParser;
 
 import org.json.JSONArray;

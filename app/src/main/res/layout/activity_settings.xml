@@ -4,7 +4,7 @@
     android:id="@+id/activity_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cdg.alex.simpleorganizer.SettingsActivity"
+    tools:context="com.cdg.alex.simpleorganizer.activities.SettingsActivity"
     android:background="@color/colorPrimary">
 
 
@@ -12,7 +12,7 @@
         android:id="@+id/settingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.cdg.alex.simpleorganizer.SettingsFragment"
+        android:name="com.cdg.alex.simpleorganizer.fragments.SettingsFragment"
         tools:layout="@layout/fragment_setting" />
 
 </android.support.design.widget.CoordinatorLayout>

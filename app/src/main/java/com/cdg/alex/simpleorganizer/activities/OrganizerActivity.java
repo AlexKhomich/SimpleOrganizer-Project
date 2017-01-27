@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer;
+package com.cdg.alex.simpleorganizer.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmsAdapter;
-import com.cdg.alex.simpleorganizer.notes.NoteFragment;
+import com.cdg.alex.simpleorganizer.fragments.AlarmFragment;
+import com.cdg.alex.simpleorganizer.fragments.DateAndTimeFragment;
+import com.cdg.alex.simpleorganizer.fragments.NoteFragment;
 
 import java.util.Map;
 

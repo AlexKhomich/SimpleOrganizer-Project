@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.cdg.alex.simpleorganizer.AlarmNotificationActivity
+import com.cdg.alex.simpleorganizer.activities.AlarmNotificationActivity
 import com.cdg.alex.simpleorganizer.service.MediaPlayerService
 
 class AlarmReceiver : BroadcastReceiver() {
