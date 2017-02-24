@@ -1,6 +1,7 @@
 package com.cdg.alex.simpleorganizer
 
 import android.content.Context
+import com.cdg.alex.simpleorganizer.service.JsonParser
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -11,9 +12,6 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
     private var paramFlag: Boolean = false // флаг для определения использования первого или второго периода
     private var periodFlag: Boolean = false // флаг для проверки симметричности первого и второго параметров периода
-
-    private val alarmParser: AlarmParser = AlarmParser()
-
     private val MONDAY: String = "monday"
     private val TUESDAY: String = "tuesday"
     private val WEDNESDAY: String = "wednesday"
@@ -228,7 +226,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
     //    функция для считывания параметров из файла настроек (этот метод необходимо будет немного переделать, чтобы доставать дни из класса ServiceSettingsHolder)
     private fun parseDay(witchDay: String, counter: Int): Boolean {
-        val allAlarmsList = alarmParser.getAllAlarms(context)
+        val allAlarmsList = JsonParser.Companion.getAllAlarms(context)
         val result = allAlarmsList[counter]
         val jsonObject = JSONObject(result)
         val jsonArray = jsonObject.getJSONArray("settings")

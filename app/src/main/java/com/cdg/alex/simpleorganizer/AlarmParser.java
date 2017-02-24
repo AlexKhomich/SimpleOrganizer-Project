@@ -18,7 +18,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public String getTime (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -36,7 +36,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public String getRingtone (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -54,7 +54,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public String getPeriod (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -72,7 +72,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean getSwitchState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -90,7 +90,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean mondayState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -108,7 +108,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean tuesdayState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -126,7 +126,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean wednesdayState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -144,7 +144,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean thursdayState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -162,7 +162,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean fridayState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -180,7 +180,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean saturdayState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -198,7 +198,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public boolean sundayState (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -216,7 +216,7 @@ public class AlarmParser extends JsonParser {
     @Override
     public String getAlarmId (@NonNull Context context) {
 
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -233,7 +233,7 @@ public class AlarmParser extends JsonParser {
 
     @Override
     public String getSoundPath (@NonNull Context context) {
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -250,7 +250,7 @@ public class AlarmParser extends JsonParser {
 
     @Override
     public boolean checkPeriod(@NonNull Context context) {
-        result = getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
+        result = JsonParser.Companion.getAllAlarms(context).get(AlarmFragment.getElementOfAlarm());
 
         try {
             JSONObject jsonObject = new JSONObject(result);

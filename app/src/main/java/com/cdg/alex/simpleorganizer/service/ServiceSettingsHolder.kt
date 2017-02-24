@@ -1,5 +1,6 @@
 package com.cdg.alex.simpleorganizer.service
 
-class ServiceSettingsHolder (private var time:String, private var isOnOrOf:Boolean, private var isMonday:Boolean, private var isTuesday:Boolean, private var isWednesday:Boolean
-    , private var isThursday:Boolean, private var isFriday:Boolean, private var isSaturday:Boolean, private var isSunday:Boolean, private var isPeriodChacked:Boolean
-    , private var ringtone:String, private var period:String, private var id:String, private var soundPath:String)
+class ServiceSettingsHolder (val time:String?, val isOnOrOf:Boolean, val isMonday:Boolean, val isTuesday:Boolean, val isWednesday:Boolean
+    , val isThursday:Boolean, val isFriday:Boolean, val isSaturday:Boolean, val isSunday:Boolean, val isPeriodChacked:Boolean
+    , val ringtone:String?, val period:String?, val id:String?, val soundPath:String?)
+

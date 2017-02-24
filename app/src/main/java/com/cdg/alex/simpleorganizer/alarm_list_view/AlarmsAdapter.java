@@ -27,11 +27,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.cdg.alex.simpleorganizer.AlarmParser;
 import com.cdg.alex.simpleorganizer.PeriodSetter;
 import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.SoundPickerDialog;
 import com.cdg.alex.simpleorganizer.receiver.AlarmReceiver;
+import com.cdg.alex.simpleorganizer.service.JsonParser;
 import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsString;
 
 import org.jaudiotagger.audio.AudioFile;
@@ -68,7 +68,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
     private String json;
     private String alarmId = "";
     private static HashMap<String, String> alarmSettingsMap = new HashMap<>(); //кэш для хранения настроек после внесения каких-либо изменений
-
 
     public static class AlarmsSettingsLoaderHolder extends RecyclerView.ViewHolder {
 
@@ -184,8 +183,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -234,8 +232,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -279,8 +276,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -324,8 +320,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -369,8 +364,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -414,8 +408,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -459,8 +452,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -504,8 +496,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                        AlarmParser alarmParser = new AlarmParser();
-                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                         String value;
                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                             value = entry.getValue().toString();
@@ -631,8 +622,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                                    AlarmParser alarmParser = new AlarmParser();
-                                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                                     String value;
                                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                         value = entry.getValue().toString();
@@ -687,8 +677,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                                    AlarmParser alarmParser = new AlarmParser();
-                                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                                     String value;
                                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                         value = entry.getValue().toString();
@@ -743,8 +732,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                                    AlarmParser alarmParser = new AlarmParser();
-                                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                                     String value;
                                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                         value = entry.getValue().toString();
@@ -799,8 +787,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                                    AlarmParser alarmParser = new AlarmParser();
-                                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                                     String value;
                                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                         value = entry.getValue().toString();
@@ -855,8 +842,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                                    AlarmParser alarmParser = new AlarmParser();
-                                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                                     String value;
                                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                         value = entry.getValue().toString();
@@ -911,8 +897,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                                    AlarmParser alarmParser = new AlarmParser();
-                                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                                     String value;
                                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                         value = entry.getValue().toString();
@@ -967,8 +952,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                                    AlarmParser alarmParser = new AlarmParser();
-                                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                                     String value;
                                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                         value = entry.getValue().toString();
@@ -1059,8 +1043,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         @Override
                         public void run() {
                             String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                            AlarmParser alarmParser = new AlarmParser();
-                            Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                            Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                             String value;
                             for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                 value = entry.getValue().toString();
@@ -1101,10 +1084,9 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
 //                секция полностью рабочая!!!
                 String alarmId = data.get(holder.getAdapterPosition()).getAlarmId();
                 String id = "";
-                AlarmParser alarmParser = new AlarmParser();
                 SharedPreferences sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                 String key;
                 String value;
                 for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
@@ -1149,8 +1131,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                 @Override
                                 public void run() {
                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                    AlarmParser alarmParser = new AlarmParser();
-                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                     String value;
                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                         value = entry.getValue().toString();
@@ -1189,8 +1170,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                 @Override
                                 public void run() {
                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                    AlarmParser alarmParser = new AlarmParser();
-                                    Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                    Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                     String value;
                                     for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                         value = entry.getValue().toString();
@@ -1277,8 +1257,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                         holder.sunday.setChecked(dayList.get(6));
 
                                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                        AlarmParser alarmParser = new AlarmParser();
-                                        Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                        Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                         String value;
                                         for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                             value = entry.getValue().toString();
@@ -1356,8 +1335,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                         @Override
                                         public void run() {
                                             String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
-                                            AlarmParser alarmParser = new AlarmParser();
-                                            Map<String, ?> stringMap = alarmParser.getSharedPrefs(context);
+                                            Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                             String value;
                                             for (Map.Entry<String, ?> entry : stringMap.entrySet()) {
                                                 value = entry.getValue().toString();

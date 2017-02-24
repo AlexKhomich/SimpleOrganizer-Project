@@ -19,6 +19,7 @@ import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmsAdapter;
 import com.cdg.alex.simpleorganizer.fragments.AlarmFragment;
 import com.cdg.alex.simpleorganizer.fragments.DateAndTimeFragment;
 import com.cdg.alex.simpleorganizer.fragments.NoteFragment;
+import com.cdg.alex.simpleorganizer.service.AlarmService;
 
 import java.util.Map;
 
@@ -76,7 +77,7 @@ public class OrganizerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onPause() {
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Map<String, String> alarmMap = AlarmsAdapter.getAlarmSettingsMap();
@@ -87,13 +88,16 @@ public class OrganizerActivity extends AppCompatActivity {
                 editor.putString(key, value);
                 editor.apply();
             }
-
         }
-        super.onStop();
+
+//        старт сервиса будильника
+        Intent alarmServiceIntent = new Intent(this, AlarmService.class);
+        this.startService(alarmServiceIntent);
+
+        super.onPause();
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
 
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);

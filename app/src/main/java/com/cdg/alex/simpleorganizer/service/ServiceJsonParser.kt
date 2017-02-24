@@ -4,9 +4,14 @@ import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ServiceJsonParser(private var indexOfAlarm: Int) : JsonParser() {
+class ServiceJsonParser: JsonParser() {
     //    здесь будут парситься строки, полученные из shared prefs и записываться в ServiceSettingsHolder
     private lateinit var result: String
+    private var indexOfAlarm: Int = 0
+
+    fun setIndexOfAlarm(index: Int) {
+        indexOfAlarm = index
+    }
 
     override fun getTime(context: Context): String? {
         result = getAllAlarms(context)[indexOfAlarm]

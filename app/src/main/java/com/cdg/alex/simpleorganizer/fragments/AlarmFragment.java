@@ -23,6 +23,7 @@ import com.cdg.alex.simpleorganizer.AlarmParser;
 import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmSettingsLoader;
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmsAdapter;
+import com.cdg.alex.simpleorganizer.service.JsonParser;
 import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsString;
 
 import org.json.JSONArray;
@@ -74,7 +75,7 @@ public class AlarmFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < alarmParser.getNumberOfAlarms(getContext()); i++) {
+                for (int i = 0; i < JsonParser.Companion.getNumberOfAlarms(getContext()); i++) {
                     dataList.add(new AlarmSettingsLoader(alarmParser.getTime(getContext()), alarmParser.getSwitchState(getContext()), alarmParser.mondayState(getContext()),
                             alarmParser.tuesdayState(getContext()), alarmParser.wednesdayState(getContext()), alarmParser.thursdayState(getContext()), alarmParser.fridayState(getContext()),
                             alarmParser.saturdayState(getContext()), alarmParser.sundayState(getContext()), alarmParser.checkPeriod(getContext()), alarmParser.getRingtone(getContext()), alarmParser.getPeriod(getContext()),
@@ -232,40 +233,36 @@ public class AlarmFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            AlarmParser alarmParser1 = new AlarmParser();
             int result = 0;
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-            Map<String, ?> alarmMap = alarmParser1.getSharedPrefs(getContext());
-            if (alarmMap != null) {
-                for (Map.Entry<String, ?> entry : alarmMap.entrySet()) {
-                    String value = entry.getValue().toString();
-                    String idAlarm;
-                    String[] stringNumber = null;
+            Map<String, ?> alarmMap = JsonParser.Companion.getSharedPrefs(getContext());
+            for (Map.Entry<String, ?> entry : alarmMap.entrySet()) {
+                String value = entry.getValue().toString();
+                String idAlarm;
+                String[] stringNumber = null;
 
-                    try {
-                        JSONObject jsonObject = new JSONObject(value);
-                        JSONArray jsonArray = jsonObject.getJSONArray("settings");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jObj = jsonArray.getJSONObject(i);
-                            idAlarm = jObj.getString("id");
-                            stringNumber = idAlarm.split("_");
-                        }
+                try {
+                    JSONObject jsonObject = new JSONObject(value);
+                    JSONArray jsonArray = jsonObject.getJSONArray("settings");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jObj = jsonArray.getJSONObject(i);
+                        idAlarm = jObj.getString("id");
+                        stringNumber = idAlarm.split("_");
+                    }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    assert stringNumber != null;
-                    int temp = Integer.parseInt(stringNumber[1]);
-                    if (result == 0 || temp > result) {
-                        result = temp;
-                    } else if (temp < result) {
-                        break;
-                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
+                assert stringNumber != null;
+                int temp = Integer.parseInt(stringNumber[1]);
+                if (result == 0 || temp > result) {
+                    result = temp;
+                } else if (temp < result) {
+                    break;
+                }
             }
 
-            int numberOfAlarms = alarmParser.getNumberOfAlarms(getContext());
+            int numberOfAlarms = JsonParser.Companion.getNumberOfAlarms(getContext());
             numberOfAlarms++;
             result++;
             id = ALARM_NAME + result;
