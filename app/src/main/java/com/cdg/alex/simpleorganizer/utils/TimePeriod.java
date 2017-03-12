@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer;
+package com.cdg.alex.simpleorganizer.utils;
 
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmSettingsLoader;
 

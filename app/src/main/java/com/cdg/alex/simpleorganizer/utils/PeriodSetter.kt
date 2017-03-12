@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer
+package com.cdg.alex.simpleorganizer.utils
 
 import android.content.Context
 import com.cdg.alex.simpleorganizer.service.JsonParser
@@ -226,7 +226,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
     //    функция для считывания параметров из файла настроек (этот метод необходимо будет немного переделать, чтобы доставать дни из класса ServiceSettingsHolder)
     private fun parseDay(witchDay: String, counter: Int): Boolean {
-        val allAlarmsList = JsonParser.Companion.getAllAlarms(context)
+        val allAlarmsList = JsonParser.getAllAlarms(context)
         val result = allAlarmsList[counter]
         val jsonObject = JSONObject(result)
         val jsonArray = jsonObject.getJSONArray("settings")

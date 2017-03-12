@@ -23,7 +23,7 @@
 
         <service
             android:name=".service.AlarmService"
-            android:exported="false" />
+            />
 
         <activity android:name=".activities.SettingsActivity" />
 

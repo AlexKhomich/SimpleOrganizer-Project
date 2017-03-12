@@ -19,12 +19,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cdg.alex.simpleorganizer.AlarmParser;
 import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmSettingsLoader;
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmsAdapter;
 import com.cdg.alex.simpleorganizer.service.JsonParser;
 import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsString;
+import com.cdg.alex.simpleorganizer.utils.AlarmParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,7 +75,8 @@ public class AlarmFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < JsonParser.Companion.getNumberOfAlarms(getContext()); i++) {
+                int count = JsonParser.Companion.getNumberOfAlarms(getContext());
+                for (int i = 0; i < count; i++) {
                     dataList.add(new AlarmSettingsLoader(alarmParser.getTime(getContext()), alarmParser.getSwitchState(getContext()), alarmParser.mondayState(getContext()),
                             alarmParser.tuesdayState(getContext()), alarmParser.wednesdayState(getContext()), alarmParser.thursdayState(getContext()), alarmParser.fridayState(getContext()),
                             alarmParser.saturdayState(getContext()), alarmParser.sundayState(getContext()), alarmParser.checkPeriod(getContext()), alarmParser.getRingtone(getContext()), alarmParser.getPeriod(getContext()),

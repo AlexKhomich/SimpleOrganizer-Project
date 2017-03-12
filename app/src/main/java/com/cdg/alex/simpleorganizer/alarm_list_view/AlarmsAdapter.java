@@ -2,9 +2,7 @@ package com.cdg.alex.simpleorganizer.alarm_list_view;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,12 +25,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.cdg.alex.simpleorganizer.PeriodSetter;
 import com.cdg.alex.simpleorganizer.R;
-import com.cdg.alex.simpleorganizer.SoundPickerDialog;
-import com.cdg.alex.simpleorganizer.receiver.AlarmReceiver;
+import com.cdg.alex.simpleorganizer.service.AlarmService;
 import com.cdg.alex.simpleorganizer.service.JsonParser;
 import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsString;
+import com.cdg.alex.simpleorganizer.utils.PeriodSetter;
+import com.cdg.alex.simpleorganizer.utils.SoundPickerDialog;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -50,7 +48,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -157,7 +154,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
         holder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar calendar = Calendar.getInstance();
+                /*final Calendar calendar = Calendar.getInstance();
                 Intent intent = new Intent(context, AlarmReceiver.class);
                 String time = holder.timeTextView.getText().toString();
                 String[] strArr = time.split(":");
@@ -169,7 +166,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
+
+                Intent intent = new Intent(context, AlarmService.class);
+                context.startService(intent);
+
             }
         });
 

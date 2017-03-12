@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer;
+package com.cdg.alex.simpleorganizer.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.cdg.alex.simpleorganizer.R;
 
 import java.io.File;
 import java.io.FilenameFilter;

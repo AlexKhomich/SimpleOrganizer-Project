@@ -1,25 +1,19 @@
 package com.cdg.alex.simpleorganizer.service
 
 import android.content.Context
-import android.content.SharedPreferences
 import java.util.*
 
 
 abstract class JsonParser {
 
-//    private lateinit var sharedPreferences: SharedPreferences
-//    private lateinit var alarmMap: Map<String, *>
-//    private lateinit var list: ArrayList<String>
-
     companion object {
-        private var sharedPreferences: SharedPreferences? = null
-        private var alarmMap: Map<String, *> = sharedPreferences?.all!!
-        private var list: ArrayList<String> = ArrayList()
+
+        private lateinit var alarmMap: Map<String, *>
 
         fun getAllAlarms(context: Context): List<String> {
-            sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-//        alarmMap = sharedPreferences.all
-//        list = ArrayList()
+            val sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            alarmMap = sharedPreferences.all
+            val list: ArrayList<String> = ArrayList()
             for ((key, value) in alarmMap) {
                 val alarmValue = value.toString()
                 list.add(alarmValue)
@@ -28,13 +22,13 @@ abstract class JsonParser {
         }
 
         fun getSharedPrefs(context: Context): Map<String, *> {
-            sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-            alarmMap = sharedPreferences?.all!!
+           val sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            alarmMap = sharedPreferences.all
             return alarmMap
         }
 
         fun getNumberOfAlarms(context: Context): Int {
-            val counter: Int = getAllAlarms(context).count()
+            val counter: Int = getAllAlarms(context).size
             return counter
         }
 

@@ -19,7 +19,6 @@ import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmsAdapter;
 import com.cdg.alex.simpleorganizer.fragments.AlarmFragment;
 import com.cdg.alex.simpleorganizer.fragments.DateAndTimeFragment;
 import com.cdg.alex.simpleorganizer.fragments.NoteFragment;
-import com.cdg.alex.simpleorganizer.service.AlarmService;
 
 import java.util.Map;
 
@@ -91,8 +90,8 @@ public class OrganizerActivity extends AppCompatActivity {
         }
 
 //        старт сервиса будильника
-        Intent alarmServiceIntent = new Intent(this, AlarmService.class);
-        this.startService(alarmServiceIntent);
+//        Intent alarmServiceIntent = new Intent(this, AlarmService.class);
+//        this.startService(alarmServiceIntent);
 
         super.onPause();
     }

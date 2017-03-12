@@ -2,7 +2,6 @@
 .gitignore
 .gradle/
 .idea/
-app/build/
 app/libs/
 app/src/androidTest/
 app/src/main/res/drawable-nodpi/

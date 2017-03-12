@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer;
+package com.cdg.alex.simpleorganizer.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
