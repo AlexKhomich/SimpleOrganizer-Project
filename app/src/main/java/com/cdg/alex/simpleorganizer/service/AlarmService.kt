@@ -5,7 +5,9 @@ import android.app.IntentService
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.cdg.alex.simpleorganizer.receiver.AlarmReceiver
+import com.cdg.alex.simpleorganizer.receiver.StartAlarmServiceReceiver
 import com.cdg.alex.simpleorganizer.utils.AlarmTime
 import com.cdg.alex.simpleorganizer.utils.NextAlarmHolder
 import java.text.SimpleDateFormat
@@ -75,7 +77,7 @@ class AlarmService : IntentService("AlarmService") {
 
     fun computeNextAlarm(context: Context): NextAlarmHolder { //all works good in this function
 
-       var nextAlarm: NextAlarmHolder = NextAlarmHolder(1, AlarmTime(8, 0))
+       var nextAlarm: NextAlarmHolder = NextAlarmHolder(-1, AlarmTime(24, 60))
 
         val alarmHolderList = ArrayList<NextAlarmHolder>()
 
@@ -212,15 +214,26 @@ class AlarmService : IntentService("AlarmService") {
 
     fun setNextAlarmAndRunIt(context: Context) {
         val calendar = Calendar.getInstance()
-        val intent = Intent(context, AlarmReceiver::class.java)
         val savedAlarm: NextAlarmHolder = computeNextAlarm(context)
-        calendar.set(Calendar.DAY_OF_WEEK, savedAlarm.dayOfWeek + 2)
-        calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
-        calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 
+        if (savedAlarm.dayOfWeek == -1 && savedAlarm.time.hours == 24 && savedAlarm.time.minutes == 60) {
+            Log.i("Alarm state", "Alarm has been not installing")
+            calendar.set(Calendar.DAY_OF_WEEK, 2)
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            val restartServiceIfAlarmIsNotCreated = Intent(context, StartAlarmServiceReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, restartServiceIfAlarmIsNotCreated, PendingIntent.FLAG_UPDATE_CURRENT)
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        } else {
+            calendar.set(Calendar.DAY_OF_WEEK, savedAlarm.dayOfWeek + 2)
+            calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
+            calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+            val intent = Intent(context, AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        }
     }
 
     fun getCurrentDate(): String {

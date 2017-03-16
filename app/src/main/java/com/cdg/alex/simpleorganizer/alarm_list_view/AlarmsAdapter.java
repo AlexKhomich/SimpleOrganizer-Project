@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.design.widget.Snackbar;
@@ -26,9 +25,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.cdg.alex.simpleorganizer.R;
-import com.cdg.alex.simpleorganizer.service.AlarmService;
 import com.cdg.alex.simpleorganizer.service.JsonParser;
-import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsString;
+import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsStringBuilder;
 import com.cdg.alex.simpleorganizer.utils.PeriodSetter;
 import com.cdg.alex.simpleorganizer.utils.SoundPickerDialog;
 
@@ -151,28 +149,28 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
         }
 
 //        test function
-        holder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*final Calendar calendar = Calendar.getInstance();
-                Intent intent = new Intent(context, AlarmReceiver.class);
-                String time = holder.timeTextView.getText().toString();
-                String[] strArr = time.split(":");
-                int hour = Integer.parseInt(strArr[0]);
-                int minute = Integer.parseInt(strArr[1]);
-
-                calendar.set(Calendar.HOUR_OF_DAY, hour);
-                calendar.set(Calendar.MINUTE, minute);
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
-
-                Intent intent = new Intent(context, AlarmService.class);
-                context.startService(intent);
-
-            }
-        });
+//        holder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                /*final Calendar calendar = Calendar.getInstance();
+//                Intent intent = new Intent(context, AlarmReceiver.class);
+//                String time = holder.timeTextView.getText().toString();
+//                String[] strArr = time.split(":");
+//                int hour = Integer.parseInt(strArr[0]);
+//                int minute = Integer.parseInt(strArr[1]);
+//
+//                calendar.set(Calendar.HOUR_OF_DAY, hour);
+//                calendar.set(Calendar.MINUTE, minute);
+//
+//                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
+//
+//                Intent intent = new Intent(context, AlarmService.class);
+//                context.startService(intent);
+//
+//            }
+//        });
 
 //        on/off switch
         holder.onOfSwitch.setOnClickListener(new View.OnClickListener() {
@@ -206,13 +204,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                         + ",\"sunday\":" + holder.sunday.isChecked() + ",\"checkPeriod\":" + holder.checkPeriod.isChecked() + ",\"id\":" + "\"" + alarmId + "\""
                                         + ",\"soundPath\":" + "\"" + data.get(holder.getAdapterPosition()).getSoundPath() + "\"" + "}]}";*/
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -249,13 +247,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -293,13 +291,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -337,13 +335,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -381,13 +379,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -425,13 +423,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -469,13 +467,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -513,13 +511,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                json = jsonSettingsString.toString();
+                                json = jsonSettingsStringBuilder.toString();
 
                                 break;
                             }
@@ -639,13 +637,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                         }
                                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                            json = jsonSettingsString.toString();
+                                                            json = jsonSettingsStringBuilder.toString();
 
                                                             break;
                                                         }
@@ -694,13 +692,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                         }
                                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                            json = jsonSettingsString.toString();
+                                                            json = jsonSettingsStringBuilder.toString();
 
                                                             break;
                                                         }
@@ -749,13 +747,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                         }
                                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                            json = jsonSettingsString.toString();
+                                                            json = jsonSettingsStringBuilder.toString();
 
                                                             break;
                                                         }
@@ -804,13 +802,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                         }
                                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                            json = jsonSettingsString.toString();
+                                                            json = jsonSettingsStringBuilder.toString();
 
                                                             break;
                                                         }
@@ -859,13 +857,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                         }
                                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                            json = jsonSettingsString.toString();
+                                                            json = jsonSettingsStringBuilder.toString();
 
                                                             break;
                                                         }
@@ -914,13 +912,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                         }
                                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                            json = jsonSettingsString.toString();
+                                                            json = jsonSettingsStringBuilder.toString();
 
                                                             break;
                                                         }
@@ -969,13 +967,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                         }
                                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                            json = jsonSettingsString.toString();
+                                                            json = jsonSettingsStringBuilder.toString();
 
                                                             break;
                                                         }
@@ -1060,13 +1058,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                 }
                                 if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                    JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                    JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                             .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                             .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                             .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                             .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                             .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                    json = jsonSettingsString.toString();
+                                    json = jsonSettingsStringBuilder.toString();
 
                                     break;
                                 }
@@ -1148,13 +1146,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                         }
                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                            json = jsonSettingsString.toString();
+                                            json = jsonSettingsStringBuilder.toString();
 
                                             break;
                                         }
@@ -1187,13 +1185,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                         }
                                         if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                     .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                     .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                     .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                     .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                     .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                            json = jsonSettingsString.toString();
+                                            json = jsonSettingsStringBuilder.toString();
 
                                             break;
                                         }
@@ -1274,13 +1272,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             }
                                             if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                         .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                         .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                         .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                json = jsonSettingsString.toString();
+                                                json = jsonSettingsStringBuilder.toString();
                                                 break;
                                             }
                                         }
@@ -1352,13 +1350,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                 }
                                                 if (alarmId.equals(sharedPrefsAlarmId)) {
 
-                                                    JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(holder.timeTextView.getText())
+                                                    JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                                             .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                                             .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
                                                             .setThursday(holder.thursday.isChecked()).setFriday(holder.friday.isChecked()).setSaturday(holder.saturday.isChecked())
                                                             .setSunday(holder.sunday.isChecked()).setCheckPeriod(holder.checkPeriod.isChecked()).setAlarmId(alarmId)
                                                             .setSoundPath(data.get(holder.getAdapterPosition()).getSoundPath()).build();
-                                                    json = jsonSettingsString.toString();
+                                                    json = jsonSettingsStringBuilder.toString();
 
                                                     break;
                                                 }

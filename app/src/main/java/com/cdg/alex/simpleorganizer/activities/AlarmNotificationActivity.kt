@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.cdg.alex.simpleorganizer.R
+import com.cdg.alex.simpleorganizer.service.AlarmService
 import com.cdg.alex.simpleorganizer.service.MediaPlayerService
 
 class AlarmNotificationActivity : AppCompatActivity() {
@@ -18,6 +19,9 @@ class AlarmNotificationActivity : AppCompatActivity() {
     fun onStopAlarmRing (view: View) {
         val intent = Intent(this, MediaPlayerService::class.java)
         this.stopService(intent)
+        //запуск нового будильника
+        val alarmServiceIntent = Intent(this, AlarmService::class.java)
+        this.startService(alarmServiceIntent)
         finish()
     }
 }

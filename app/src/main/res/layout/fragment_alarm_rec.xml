@@ -23,9 +23,9 @@
         android:id="@+id/fabAddAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/ic_alarm_add"
         app:backgroundTint="@android:color/holo_red_dark"
-        app:rippleColor="#4d0000"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="16dp" />
+        app:rippleColor="#4d0000" />
 </android.support.design.widget.CoordinatorLayout>

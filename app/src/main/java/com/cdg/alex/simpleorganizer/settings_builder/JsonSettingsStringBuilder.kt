@@ -1,9 +1,9 @@
 package com.cdg.alex.simpleorganizer.settings_builder
 
 
-class JsonSettingsString (var time: CharSequence?, var period: CharSequence?,  var ringtone: CharSequence?, var onOfSwitch: Boolean,var monday: Boolean
-                            , var tuesday: Boolean,var wednesday: Boolean, var thursday: Boolean, var friday: Boolean, var saturday: Boolean
-                            ,var sunday: Boolean, var checkPeriod: Boolean, var alarmId: CharSequence?, var soundPath: CharSequence?) {
+class JsonSettingsStringBuilder(var time: CharSequence?, var period: CharSequence?, var ringtone: CharSequence?, var onOfSwitch: Boolean, var monday: Boolean
+                                , var tuesday: Boolean, var wednesday: Boolean, var thursday: Boolean, var friday: Boolean, var saturday: Boolean
+                                , var sunday: Boolean, var checkPeriod: Boolean, var alarmId: CharSequence?, var soundPath: CharSequence?) {
 
     private constructor(builder: Builder) : this (builder.time, builder.period, builder.ringtone, builder.onOfSwitch, builder.monday, builder.tuesday, builder.wednesday
     , builder.thursday, builder.friday, builder.saturday, builder.sunday, builder.checkPeriod, builder.alarmId, builder.soundPath)
@@ -123,7 +123,7 @@ class Builder {
         return this
     }
 
-    fun build() = JsonSettingsString(this)
+    fun build() = JsonSettingsStringBuilder(this)
 
     }
 

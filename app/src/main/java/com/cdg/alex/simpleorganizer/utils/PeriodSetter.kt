@@ -157,7 +157,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
         return temp
     }
-
+//    main function in this class
     fun buildNewPeriodWeek(alarmCounter: Int): ArrayList<Boolean> {
         var daysCounter: Int = 0
         val shiftValue = getShiftValue(alarmCounter)

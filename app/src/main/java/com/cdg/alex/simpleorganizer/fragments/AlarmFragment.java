@@ -23,7 +23,7 @@ import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmSettingsLoader;
 import com.cdg.alex.simpleorganizer.alarm_list_view.AlarmsAdapter;
 import com.cdg.alex.simpleorganizer.service.JsonParser;
-import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsString;
+import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsStringBuilder;
 import com.cdg.alex.simpleorganizer.utils.AlarmParser;
 
 import org.json.JSONArray;
@@ -313,13 +313,13 @@ public class AlarmFragment extends Fragment {
                     + ",\"thursday\":" + alarmSettingsLoader.isThursday() + ",\"friday\":" + alarmSettingsLoader.isFriday() + ",\"saturday\":" + alarmSettingsLoader.isSaturday()
                     + ",\"sunday\":" + alarmSettingsLoader.isSunday() + ",\"checkPeriod\":" + alarmSettingsLoader.isCheckPeriod() + ",\"id\":" + "\"" + id + "\"" + ",\"soundPath\":" + "\"" + defaultSong + "\"" + "}]}";*/
 
-            JsonSettingsString jsonSettingsString = new JsonSettingsString.Builder().setTime(alarmSettingsLoader.getTimeTextView())
+            JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(alarmSettingsLoader.getTimeTextView())
                     .setPeriod(alarmSettingsLoader.getSetPeriodView()).setRingtone(alarmSettingsLoader.getSetRingtoneView()).setOnOfSwitch(alarmSettingsLoader.isOnOfSwitch())
                     .setMonday(alarmSettingsLoader.isMonday()).setTuesday(alarmSettingsLoader.isTuesday()).setWednesday(alarmSettingsLoader.isWednesday())
                     .setThursday(alarmSettingsLoader.isThursday()).setFriday(alarmSettingsLoader.isFriday()).setSaturday(alarmSettingsLoader.isSaturday())
                     .setSunday(alarmSettingsLoader.isSunday()).setCheckPeriod(alarmSettingsLoader.isCheckPeriod()).setAlarmId(id)
                     .setSoundPath(defaultSong).build();
-            String json = jsonSettingsString.toString();
+            String json = jsonSettingsStringBuilder.toString();
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(id, json);
