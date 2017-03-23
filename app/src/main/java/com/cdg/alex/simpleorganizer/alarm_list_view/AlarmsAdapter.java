@@ -51,6 +51,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSettingsLoaderHolder> {
@@ -64,6 +66,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
     private String json;
     private String alarmId = "";
     private static HashMap<String, String> alarmSettingsMap = new HashMap<>(); //кэш для хранения настроек после внесения каких-либо изменений
+    private ExecutorService service = Executors.newFixedThreadPool(2);
 
     public static class AlarmsSettingsLoaderHolder extends RecyclerView.ViewHolder {
 
@@ -149,37 +152,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             holder.settingsButton.setImageDrawable(context.getDrawable(R.drawable.settings));
         }
 
-//        test function
-//        holder.ringtoneButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                /*final Calendar calendar = Calendar.getInstance();
-//                Intent intent = new Intent(context, AlarmReceiver.class);
-//                String time = holder.timeTextView.getText().toString();
-//                String[] strArr = time.split(":");
-//                int hour = Integer.parseInt(strArr[0]);
-//                int minute = Integer.parseInt(strArr[1]);
-//
-//                calendar.set(Calendar.HOUR_OF_DAY, hour);
-//                calendar.set(Calendar.MINUTE, minute);
-//
-//                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
-//
-//                Intent intent = new Intent(context, AlarmService.class);
-//                context.startService(intent);
-//
-//            }
-//        });
-
 //        on/off switch
         holder.onOfSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean temp = holder.onOfSwitch.isChecked();
                 alarmSettingsLoader.setOnOfSwitch(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -198,13 +177,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                 e.printStackTrace();
                             }
                             if (alarmId.equals(sharedPrefsAlarmId)) {
-                               /* json = "{\"settings\":[{\"timeTextView\":" + "\"" + holder.timeTextView.getText() + "\"" + ",\"setPeriodView\":" + "\"" + holder.setPeriodView.getText() + "\""
-                                        + ",\"setRingtoneView\":" + "\"" + holder.setRingtoneView.getText() + "\"" + ",\"onOfSwitch\":" + holder.onOfSwitch.isChecked() + ",\"monday\":"
-                                        + holder.monday.isChecked() + ",\"tuesday\":" + holder.tuesday.isChecked() + ",\"wednesday\":" + holder.wednesday.isChecked()
-                                        + ",\"thursday\":" + holder.thursday.isChecked() + ",\"friday\":" + holder.friday.isChecked() + ",\"saturday\":" + holder.saturday.isChecked()
-                                        + ",\"sunday\":" + holder.sunday.isChecked() + ",\"checkPeriod\":" + holder.checkPeriod.isChecked() + ",\"id\":" + "\"" + alarmId + "\""
-                                        + ",\"soundPath\":" + "\"" + data.get(holder.getAdapterPosition()).getSoundPath() + "\"" + "}]}";*/
-
                                 JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(holder.timeTextView.getText())
                                         .setPeriod(holder.setPeriodView.getText()).setRingtone(holder.setRingtoneView.getText()).setOnOfSwitch(holder.onOfSwitch.isChecked())
                                         .setMonday(holder.monday.isChecked()).setTuesday(holder.tuesday.isChecked()).setWednesday(holder.wednesday.isChecked())
@@ -218,7 +190,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
+                });
             }
         });
 
@@ -228,7 +200,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             public void onClick(View view) {
                 boolean temp = holder.monday.isChecked();
                 alarmSettingsLoader.setMonday(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -261,8 +233,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
-
+                });
             }
         });
 
@@ -272,7 +243,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             public void onClick(View view) {
                 boolean temp = holder.tuesday.isChecked();
                 alarmSettingsLoader.setTuesday(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -305,7 +276,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
+                });
 
             }
         });
@@ -316,7 +287,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             public void onClick(View view) {
                 boolean temp = holder.wednesday.isChecked();
                 alarmSettingsLoader.setWednesday(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -349,7 +320,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
+                });
 
             }
         });
@@ -360,7 +331,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             public void onClick(View view) {
                 boolean temp = holder.thursday.isChecked();
                 alarmSettingsLoader.setThursday(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -393,7 +364,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
+                });
 
             }
         });
@@ -404,7 +375,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             public void onClick(View view) {
                 boolean temp = holder.friday.isChecked();
                 alarmSettingsLoader.setFriday(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -437,7 +408,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
+                });
 
             }
         });
@@ -448,7 +419,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             public void onClick(View view) {
                 boolean temp = holder.saturday.isChecked();
                 alarmSettingsLoader.setSaturday(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -481,7 +452,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
+                });
 
             }
         });
@@ -492,7 +463,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
             public void onClick(View view) {
                 boolean temp = holder.sunday.isChecked();
                 alarmSettingsLoader.setSunday(temp);
-                new Thread(new Runnable() {
+                service.submit(new Runnable() {
                     @Override
                     public void run() {
                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -525,32 +496,15 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         }
                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                     }
-                }).run();
+                });
 
             }
         });
 
-//        test function
+//        test function!!!!!!!!!
         holder.settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*ArrayList<Boolean> dayList = new ArrayList<>();
-                dayList.add(alarmSettingsLoader.isMonday());
-                dayList.add(alarmSettingsLoader.isTuesday());
-                dayList.add(alarmSettingsLoader.isWednesday());
-                dayList.add(alarmSettingsLoader.isThursday());
-                dayList.add(alarmSettingsLoader.isFriday());
-                dayList.add(alarmSettingsLoader.isSaturday());
-                dayList.add(alarmSettingsLoader.isSunday());
-                PeriodSetter periodSetter = new PeriodSetter(dayList, holder.setPeriodView.getText().toString(), context);
-                dayList = periodSetter.buildNewPeriodWeek(0);// нужно делать в цикле с вызовом кол-ва будитьников
-                holder.monday.setChecked(dayList.get(0));
-                holder.tuesday.setChecked(dayList.get(1));
-                holder.wednesday.setChecked(dayList.get(2));
-                holder.thursday.setChecked(dayList.get(3));
-                holder.friday.setChecked(dayList.get(4));
-                holder.saturday.setChecked(dayList.get(5));
-                holder.sunday.setChecked(dayList.get(6));*/
                 PeriodSetterBuilder periodSetterBuilder = new PeriodSetterBuilder();
                 periodSetterBuilder.buildNewWeek(context);
             }
@@ -620,7 +574,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             holder.saturday.setChecked(dayList.get(5));
                                             holder.sunday.setChecked(dayList.get(6));
 
-                                            new Thread(new Runnable() {
+                                            service.submit(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -653,7 +607,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                     }
                                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                                 }
-                                            }).run();
+                                            });
                                             break;
                                         case "TUESDAY":
                                             holder.tuesday.setChecked(true);
@@ -675,7 +629,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             holder.saturday.setChecked(dayList.get(5));
                                             holder.sunday.setChecked(dayList.get(6));
 
-                                            new Thread(new Runnable() {
+                                            service.submit(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -708,7 +662,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                     }
                                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                                 }
-                                            }).run();
+                                            });
                                             break;
                                         case "WEDNESDAY":
                                             holder.wednesday.setChecked(true);
@@ -730,7 +684,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             holder.saturday.setChecked(dayList.get(5));
                                             holder.sunday.setChecked(dayList.get(6));
 
-                                            new Thread(new Runnable() {
+                                            service.submit(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -763,7 +717,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                     }
                                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                                 }
-                                            }).run();
+                                            });
                                             break;
                                         case "THURSDAY":
                                             holder.thursday.setChecked(true);
@@ -785,7 +739,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             holder.saturday.setChecked(dayList.get(5));
                                             holder.sunday.setChecked(dayList.get(6));
 
-                                            new Thread(new Runnable() {
+                                            service.submit(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -818,7 +772,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                     }
                                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                                 }
-                                            }).run();
+                                            });
                                             break;
                                         case "FRIDAY":
                                             holder.friday.setChecked(true);
@@ -840,7 +794,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             holder.saturday.setChecked(dayList.get(5));
                                             holder.sunday.setChecked(dayList.get(6));
 
-                                            new Thread(new Runnable() {
+                                            service.submit(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -873,7 +827,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                     }
                                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                                 }
-                                            }).run();
+                                            });
                                             break;
                                         case "SATURDAY":
                                             holder.saturday.setChecked(true);
@@ -895,7 +849,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             holder.saturday.setChecked(dayList.get(5));
                                             holder.sunday.setChecked(dayList.get(6));
 
-                                            new Thread(new Runnable() {
+                                            service.submit(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -928,7 +882,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                     }
                                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                                 }
-                                            }).run();
+                                            });
                                             break;
                                         case "SUNDAY":
                                             holder.sunday.setChecked(true);
@@ -950,7 +904,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             holder.saturday.setChecked(dayList.get(5));
                                             holder.sunday.setChecked(dayList.get(6));
 
-                                            new Thread(new Runnable() {
+                                            service.submit(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -983,7 +937,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                                     }
                                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                                 }
-                                            }).run();
+                                            });
                                             break;
                                     }
                                 }
@@ -1041,7 +995,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             break;
                     }
 
-                    new Thread(new Runnable() {
+                    service.submit(new Runnable() {
                         @Override
                         public void run() {
                             String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -1074,7 +1028,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             }
                             alarmSettingsMap.put(sharedPrefsAlarmId, json);
                         }
-                    }).run();
+                    });
 
                 }
             }
@@ -1129,7 +1083,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                             holder.timeTextView.setText(mHour + ":0" + mMinute);
                             alarmSettingsLoader.setTimeTextView(mHour + ":0" + mMinute);
                             Snackbar.make(v, "Alarm set for " + "..." + " from now", Snackbar.LENGTH_SHORT).show();
-                            new Thread(new Runnable() {
+                            service.submit(new Runnable() {
                                 @Override
                                 public void run() {
                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -1162,13 +1116,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                     }
                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                 }
-                            }).run();
+                            });
                         } else {
                             holder.timeTextView.setText(mHour + ":" + mMinute);
                             alarmSettingsLoader.setTimeTextView(mHour + ":" + mMinute);
                             Snackbar.make(view, "Alarm set for " + "..." + " from now", Snackbar.LENGTH_SHORT).show();
 
-                            new Thread(new Runnable() {
+                            service.submit(new Runnable() {
                                 @Override
                                 public void run() {
                                     String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -1201,7 +1155,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                     }
                                     alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                 }
-                            }).run();
+                            });
                         }
 
                     }
@@ -1236,7 +1190,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                 holder.setPeriodView.setText(picker1 + "/" + picker2);
                                 alarmSettingsLoader.setSetPeriodView(picker1 + "/" + picker2);
 
-                                new Thread(new Runnable() {
+                                service.submit(new Runnable() {
                                     @Override
                                     public void run() {
                                         ArrayList<Boolean> dayList = new ArrayList<>();
@@ -1287,7 +1241,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                         }
                                         alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                     }
-                                }).run();
+                                });
 
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -1333,7 +1287,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                     alarmSettingsLoader.setSetRingtoneView(t);
                                     alarmSettingsLoader.setSoundPath(fileName);
 
-                                    new Thread(new Runnable() {
+                                    service.submit(new Runnable() {
                                         @Override
                                         public void run() {
                                             String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
@@ -1366,7 +1320,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                             }
                                             alarmSettingsMap.put(sharedPrefsAlarmId, json);
                                         }
-                                    }).run();
+                                    });
 
                                 } catch (CannotReadException e) {
                                     e.printStackTrace();

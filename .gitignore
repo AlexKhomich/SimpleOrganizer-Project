@@ -8,3 +8,4 @@ app/src/main/res/drawable-nodpi/
 app/src/main/res/drawable-v24/
 build/
 gradle/
+!/app/src/main/java/com/cdg/alex/simpleorganizer/settings_builder/JsonSettingsStringBuilder.kt

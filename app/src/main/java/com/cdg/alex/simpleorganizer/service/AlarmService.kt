@@ -59,9 +59,7 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
 
 
     fun computeNextAlarm(context: Context): NextAlarmHolder { //all works good in this function
-
        var nextAlarm: NextAlarmHolder
-
         val alarmHolderList = ArrayList<NextAlarmHolder>()
 
         for (i in 0..readFromSettingsAndSaveToHolder(context).size - 1) {
