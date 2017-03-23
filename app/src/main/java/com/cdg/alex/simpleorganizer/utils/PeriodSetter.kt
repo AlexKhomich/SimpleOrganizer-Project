@@ -1,24 +1,21 @@
 package com.cdg.alex.simpleorganizer.utils
 
 import android.content.Context
-import com.cdg.alex.simpleorganizer.service.JsonParser
-import org.json.JSONException
-import org.json.JSONObject
 import java.util.*
 
-class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: String, private var context: Context) {
+class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: String, private var context: Context): SettingsToHolder {
 
     private val dayListFromSettings: ArrayList<Boolean> = ArrayList()
 
     private var paramFlag: Boolean = false // флаг для определения использования первого или второго периода
     private var periodFlag: Boolean = false // флаг для проверки симметричности первого и второго параметров периода
-    private val MONDAY: String = "monday"
-    private val TUESDAY: String = "tuesday"
-    private val WEDNESDAY: String = "wednesday"
-    private val THURSDAY: String = "thursday"
-    private val FRIDAY: String = "friday"
-    private val SATURDAY: String = "saturday"
-    private val SUNDAY: String = "sunday"
+//    private val MONDAY: String = "monday"
+//    private val TUESDAY: String = "tuesday"
+//    private val WEDNESDAY: String = "wednesday"
+//    private val THURSDAY: String = "thursday"
+//    private val FRIDAY: String = "friday"
+//    private val SATURDAY: String = "saturday"
+//    private val SUNDAY: String = "sunday"
 
     //получение первого значения периода в виде числа
     private fun getFirstOption(): Int = splitString(0).toInt()
@@ -82,14 +79,14 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
     private fun getShiftValue(alarmCounter: Int): Int {
         var temp: Int = 0
 
-//        билд нового списка со считанными из shared prefs днями
-        dayListFromSettings.add(0, parseDay(MONDAY, alarmCounter))
-        dayListFromSettings.add(1, parseDay(TUESDAY, alarmCounter))
-        dayListFromSettings.add(2, parseDay(WEDNESDAY, alarmCounter))
-        dayListFromSettings.add(3, parseDay(THURSDAY, alarmCounter))
-        dayListFromSettings.add(4, parseDay(FRIDAY, alarmCounter))
-        dayListFromSettings.add(5, parseDay(SATURDAY, alarmCounter))
-        dayListFromSettings.add(6, parseDay(SUNDAY, alarmCounter))
+//        билд нового списка со считанными из ServiceSettingsHolder днями
+        dayListFromSettings.add(0, readFromSettingsAndSaveToHolder(context)[alarmCounter].isMonday)
+        dayListFromSettings.add(1, readFromSettingsAndSaveToHolder(context)[alarmCounter].isTuesday)
+        dayListFromSettings.add(2, readFromSettingsAndSaveToHolder(context)[alarmCounter].isWednesday)
+        dayListFromSettings.add(3, readFromSettingsAndSaveToHolder(context)[alarmCounter].isThursday)
+        dayListFromSettings.add(4, readFromSettingsAndSaveToHolder(context)[alarmCounter].isFriday)
+        dayListFromSettings.add(5, readFromSettingsAndSaveToHolder(context)[alarmCounter].isSaturday)
+        dayListFromSettings.add(6, readFromSettingsAndSaveToHolder(context)[alarmCounter].isSunday)
 
 //        вычисление размера списка
         var k: Int = dayListFromSettings.size
@@ -225,7 +222,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
     }
 
     //    функция для считывания параметров из файла настроек (этот метод необходимо будет немного переделать, чтобы доставать дни из класса ServiceSettingsHolder)
-    private fun parseDay(witchDay: String, counter: Int): Boolean {
+    /*private fun parseDay(witchDay: String, counter: Int): Boolean {
         val allAlarmsList = JsonParser.getAllAlarms(context)
         val result = allAlarmsList[counter]
         val jsonObject = JSONObject(result)
@@ -306,7 +303,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
         }
 
         return day
-    }
+    }*/
 
 //сделать функцию записи в shared preferences
 }

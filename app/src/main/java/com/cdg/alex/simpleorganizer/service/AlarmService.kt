@@ -10,20 +10,17 @@ import com.cdg.alex.simpleorganizer.receiver.AlarmReceiver
 import com.cdg.alex.simpleorganizer.receiver.StartAlarmServiceReceiver
 import com.cdg.alex.simpleorganizer.utils.AlarmTime
 import com.cdg.alex.simpleorganizer.utils.NextAlarmHolder
+import com.cdg.alex.simpleorganizer.utils.SettingsToHolder
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AlarmService : IntentService("AlarmService") {
+class AlarmService : IntentService("AlarmService"), SettingsToHolder {
 
     override fun onHandleIntent(p0: Intent?) {
         setNextAlarmAndRunIt(this)
     }
 
-
-    private lateinit var serviceSettingsHolder: ServiceSettingsHolder
-    private val sjp = ServiceJsonParser()
-    private val settingsList = ArrayList<ServiceSettingsHolder>()
     private val MONDAY: String = "Mon"
     private val TUESDAY: String = "Tue"
     private val WEDNESDAY: String = "Wed"
@@ -32,28 +29,13 @@ class AlarmService : IntentService("AlarmService") {
     private val SATURDAY: String = "Sat"
     private val SUNDAY: String = "Sun"
 
-//    вычитывает будильники из хранилища и сохраняет их в holder
-    private fun readFromSettingsAndSaveToHolder(context: Context): ArrayList<ServiceSettingsHolder> {
-
-        for (i in 0..JsonParser.getNumberOfAlarms(context) - 1) {
-            sjp.setIndexOfAlarm(i)
-            serviceSettingsHolder = ServiceSettingsHolder(sjp.getTime(context), sjp.getSwitchState(context), sjp.mondayState(context), sjp.tuesdayState(context), sjp.wednesdayState(context),
-                    sjp.thursdayState(context), sjp.fridayState(context), sjp.saturdayState(context), sjp.sundayState(context), sjp.checkPeriod(context), sjp.getRingtone(context), sjp.getPeriod(context),
-                    sjp.getAlarmId(context), sjp.getSoundPath(context))
-
-            settingsList.add(serviceSettingsHolder)
-        }
-
-        return settingsList
-    }
-
     private fun getOnOfState(index: Int): Boolean {
-        val holderTemp = settingsList[index]
+        val holderTemp = readFromSettingsAndSaveToHolder(this)[index]
         return holderTemp.isOnOrOf
     }
 
     private fun getTime(index: Int): AlarmTime {
-        val holderTemp = settingsList[index]
+        val holderTemp = readFromSettingsAndSaveToHolder(this)[index]
         val time: String? = holderTemp.time
         val argSplit: List<String>? = time?.split(":")
         val hour: Int? = argSplit?.get(0)?.toInt()
@@ -62,7 +44,7 @@ class AlarmService : IntentService("AlarmService") {
     }
 
     private fun getDaysList(index: Int): ArrayList<Boolean> {
-        val holderTemp = settingsList[index]
+        val holderTemp = readFromSettingsAndSaveToHolder(this)[index]
         val daysList = ArrayList<Boolean>()
         daysList.add(holderTemp.isMonday)
         daysList.add(holderTemp.isTuesday)
@@ -75,9 +57,10 @@ class AlarmService : IntentService("AlarmService") {
     }
 
 
+
     fun computeNextAlarm(context: Context): NextAlarmHolder { //all works good in this function
 
-       var nextAlarm: NextAlarmHolder = NextAlarmHolder(-1, AlarmTime(24, 60))
+       var nextAlarm: NextAlarmHolder
 
         val alarmHolderList = ArrayList<NextAlarmHolder>()
 
@@ -110,106 +93,26 @@ class AlarmService : IntentService("AlarmService") {
             }
         }
 
-        val iterator = alarmHolderList.listIterator()
-        for (i in 0..alarmHolderList.size - 1) {
-            if (alarmHolderList.size > 2) { // if elements are more than 2 in list
-                iterator.next()
-                if (iterator.hasNext()) { // here place has the mistake with increment
-                    val day = alarmHolderList[i].dayOfWeek
-                    var hour = alarmHolderList[i].time.hours
-                    var minute = alarmHolderList[i].time.minutes
-                    val nextDay = alarmHolderList[i + 1].dayOfWeek
-                    var nextHours = alarmHolderList[i + 1].time.hours
-                    var nextMinutes = alarmHolderList[i + 1].time.minutes
-
-                    if (day == nextDay) {
-                        hour = alarmHolderList[i].time.hours
-                        nextHours = alarmHolderList[i + 1].time.hours
-                        if (hour == nextHours) {
-                            minute = alarmHolderList[i].time.minutes
-                            nextMinutes = alarmHolderList[i + 1].time.minutes
-                            if (minute!! < nextMinutes!!) {
-                                val alarmTime = AlarmTime(hour, minute)
-                                nextAlarm = NextAlarmHolder(day, alarmTime)
-                                alarmHolderList.remove(alarmHolderList[i + 1])
-                            } else if (nextMinutes < minute) {
-                                val alarmTime = AlarmTime(nextHours, nextMinutes)
-                                nextAlarm = NextAlarmHolder(nextDay, alarmTime)
-                                alarmHolderList.remove(alarmHolderList[i])
+        if (alarmHolderList.isNotEmpty()) {
+            nextAlarm = alarmHolderList[0]
+            if (alarmHolderList.size > 1) {
+                for (i in 1..alarmHolderList.size - 1) {
+                    if (nextAlarm.dayOfWeek == alarmHolderList[i].dayOfWeek) {
+                        if (nextAlarm.time.hours == alarmHolderList[i].time.hours) {
+                            if (nextAlarm.time.minutes!! > alarmHolderList[i].time.minutes!!){
+                                nextAlarm = alarmHolderList[i]
                             }
-                        } else if (hour!! < nextHours!!) {
-                            val alarmTime = AlarmTime(hour, minute)
-                            nextAlarm = NextAlarmHolder(day, alarmTime)
-                            alarmHolderList.remove(alarmHolderList[i + 1])
-                        } else if (hour > nextHours) {
-                            val alarmTime = AlarmTime(nextHours, nextMinutes)
-                            nextAlarm = NextAlarmHolder(nextDay, alarmTime)
-                            alarmHolderList.remove(alarmHolderList[i])
+                        } else if (nextAlarm.time.hours!! > alarmHolderList[i].time.hours!!) {
+                            nextAlarm = alarmHolderList[i]
                         }
-                    } else if (day < nextDay) {
-                        val alarmTime = AlarmTime(hour, minute)
-                        nextAlarm = NextAlarmHolder(day, alarmTime)
-                        alarmHolderList.remove(alarmHolderList[i + 1])
-                    } else {
-                        val alarmTime = AlarmTime(nextHours, nextMinutes)
-                        nextAlarm = NextAlarmHolder(nextDay, alarmTime)
-                        alarmHolderList.remove(alarmHolderList[i])
+                    } else if (nextAlarm.dayOfWeek > alarmHolderList[i].dayOfWeek) {
+                        nextAlarm = alarmHolderList[i]
                     }
-                } else {
-                    val alarmTime = AlarmTime(alarmHolderList[i].time.hours, alarmHolderList[i].time.minutes)
-                    nextAlarm = NextAlarmHolder(alarmHolderList[i].dayOfWeek, alarmTime)
-                }
-            } else if (alarmHolderList.size <= 2) { // if elements are less or equals than 2 in list
-                iterator.next()
-                if (iterator.hasNext()) { // if the list has more then one element
-                    val day = alarmHolderList[i].dayOfWeek
-                    var hour = alarmHolderList[i].time.hours
-                    var minute = alarmHolderList[i].time.minutes
-                    val nextDay = alarmHolderList[i + 1].dayOfWeek
-                    var nextHours = alarmHolderList[i + 1].time.hours
-                    var nextMinutes = alarmHolderList[i + 1].time.minutes
-
-                    if (day == nextDay) {
-                        hour = alarmHolderList[i].time.hours
-                        nextHours = alarmHolderList[i + 1].time.hours
-                        if (hour == nextHours) {
-                            minute = alarmHolderList[i].time.minutes
-                            nextMinutes = alarmHolderList[i + 1].time.minutes
-                            if (minute!! < nextMinutes!!) {
-                                val alarmTime = AlarmTime(hour, minute)
-                                nextAlarm = NextAlarmHolder(day, alarmTime)
-                                alarmHolderList.remove(alarmHolderList[i + 1])
-                            } else if (nextMinutes < minute) {
-                                val alarmTime = AlarmTime(nextHours, nextMinutes)
-                                nextAlarm = NextAlarmHolder(nextDay, alarmTime)
-                                alarmHolderList.remove(alarmHolderList[i])
-                            }
-                        } else if (hour!! < nextHours!!) {
-                            val alarmTime = AlarmTime(hour, minute)
-                            nextAlarm = NextAlarmHolder(day, alarmTime)
-                            alarmHolderList.remove(alarmHolderList[i + 1])
-                        } else if (hour > nextHours) {
-                            val alarmTime = AlarmTime(nextHours, nextMinutes)
-                            nextAlarm = NextAlarmHolder(nextDay, alarmTime)
-                            alarmHolderList.remove(alarmHolderList[i])
-                        }
-                    } else if (day < nextDay) {
-                        val alarmTime = AlarmTime(hour, minute)
-                        nextAlarm = NextAlarmHolder(day, alarmTime)
-                        alarmHolderList.remove(alarmHolderList[i + 1])
-                    } else {
-                        val alarmTime = AlarmTime(nextHours, nextMinutes)
-                        nextAlarm = NextAlarmHolder(nextDay, alarmTime)
-                        alarmHolderList.remove(alarmHolderList[i])
-                    }
-                    break
-                } else { // if the list has only one element
-                    val alarmTime = AlarmTime(alarmHolderList[i].time.hours, alarmHolderList[i].time.minutes)
-                    nextAlarm = NextAlarmHolder(alarmHolderList[i].dayOfWeek, alarmTime)
                 }
             }
-        }
-            return nextAlarm
+        } else return NextAlarmHolder(-1, AlarmTime(24, 60))
+
+        return nextAlarm
     }
 
     fun setNextAlarmAndRunIt(context: Context) {
@@ -226,9 +129,15 @@ class AlarmService : IntentService("AlarmService") {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         } else {
-            calendar.set(Calendar.DAY_OF_WEEK, savedAlarm.dayOfWeek + 2)
-            calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
-            calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+            if ((savedAlarm.dayOfWeek + 2) > 7 ) {
+                calendar.set(Calendar.DAY_OF_WEEK, 1)
+                calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
+                calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+            } else {
+                calendar.set(Calendar.DAY_OF_WEEK, savedAlarm.dayOfWeek + 2)
+                calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
+                calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+            }
             val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

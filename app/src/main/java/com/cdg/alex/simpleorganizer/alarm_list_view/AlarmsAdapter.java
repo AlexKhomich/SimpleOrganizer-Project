@@ -28,6 +28,7 @@ import com.cdg.alex.simpleorganizer.R;
 import com.cdg.alex.simpleorganizer.service.JsonParser;
 import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsStringBuilder;
 import com.cdg.alex.simpleorganizer.utils.PeriodSetter;
+import com.cdg.alex.simpleorganizer.utils.PeriodSetterBuilder;
 import com.cdg.alex.simpleorganizer.utils.SoundPickerDialog;
 
 import org.jaudiotagger.audio.AudioFile;
@@ -533,7 +534,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
         holder.settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<Boolean> dayList = new ArrayList<>();
+                /*ArrayList<Boolean> dayList = new ArrayList<>();
                 dayList.add(alarmSettingsLoader.isMonday());
                 dayList.add(alarmSettingsLoader.isTuesday());
                 dayList.add(alarmSettingsLoader.isWednesday());
@@ -549,7 +550,9 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                 holder.thursday.setChecked(dayList.get(3));
                 holder.friday.setChecked(dayList.get(4));
                 holder.saturday.setChecked(dayList.get(5));
-                holder.sunday.setChecked(dayList.get(6));
+                holder.sunday.setChecked(dayList.get(6));*/
+                PeriodSetterBuilder periodSetterBuilder = new PeriodSetterBuilder();
+                periodSetterBuilder.buildNewWeek(context);
             }
         });
 
