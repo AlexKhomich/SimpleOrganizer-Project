@@ -21,9 +21,7 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.AlarmService"
-            />
+        <service android:name=".service.AlarmService" />
 
         <activity android:name=".activities.SettingsActivity" />
 
@@ -31,17 +29,17 @@
             android:name=".service.MediaPlayerService"
             android:enabled="true"
             android:exported="true"
-            android:process=":media_player_service">
+            android:process=":media_player_service"></service>
 
-        </service>
+        <receiver android:name=".receiver.AlarmReceiver"></receiver>
 
-        <receiver android:name=".receiver.AlarmReceiver">
+        <activity
+            android:name=".activities.AlarmNotificationActivity"
+            android:noHistory="true"></activity>
 
-        </receiver>
-
-        <activity android:name=".activities.AlarmNotificationActivity"
-            android:noHistory="true">
-        </activity>
+        <service
+            android:name=".service.PeriodBuilderService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@ import com.cdg.alex.simpleorganizer.service.JsonParser
 import com.cdg.alex.simpleorganizer.settings_builder.JsonSettingsStringBuilder
 
 
-//здесь нужно организовать перестановку дней периода в конце недели и запись в shared preferences
+//class for rebuilding days of week and save this to shared preferences
 class PeriodSetterBuilder: SettingsToHolder {
 
     private fun readSavedAlarms(context: Context, numberOfAlarm: Int): ArrayList<Boolean> {
@@ -21,6 +21,7 @@ class PeriodSetterBuilder: SettingsToHolder {
         return dayList
     }
 
+    //method for rebuilding old week to new week and save this to shared preferences
     fun buildNewWeek(context: Context) {
 
         val sharedPrefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)

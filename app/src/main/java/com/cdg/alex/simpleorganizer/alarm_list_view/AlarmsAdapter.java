@@ -1173,6 +1173,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
 
                 if (!(holder.checkPeriod.isChecked())) return;
 
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                 view = ((Activity) context).getLayoutInflater().inflate(R.layout.period_picker_dialog, null);
@@ -1181,6 +1182,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                         .setView(view)
                         .setCancelable(true)
                         .setPositiveButton("Set", new DialogInterface.OnClickListener() {
+
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 NumberPicker numberPicker1 = (NumberPicker) finalView.findViewById(R.id.numberPicker);
@@ -1190,28 +1192,28 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                 holder.setPeriodView.setText(picker1 + "/" + picker2);
                                 alarmSettingsLoader.setSetPeriodView(picker1 + "/" + picker2);
 
+                                ArrayList<Boolean> dayList = new ArrayList<>();
+                                dayList.add(alarmSettingsLoader.isMonday());
+                                dayList.add(alarmSettingsLoader.isTuesday());
+                                dayList.add(alarmSettingsLoader.isWednesday());
+                                dayList.add(alarmSettingsLoader.isThursday());
+                                dayList.add(alarmSettingsLoader.isFriday());
+                                dayList.add(alarmSettingsLoader.isSaturday());
+                                dayList.add(alarmSettingsLoader.isSunday());
+
+                                PeriodSetter periodSetter = new PeriodSetter(dayList, holder.setPeriodView.getText().toString(), context); //вроде все хоккей :)
+                                dayList = periodSetter.managePeriod();
+                                holder.monday.setChecked(dayList.get(0));
+                                holder.tuesday.setChecked(dayList.get(1));
+                                holder.wednesday.setChecked(dayList.get(2));
+                                holder.thursday.setChecked(dayList.get(3));
+                                holder.friday.setChecked(dayList.get(4));
+                                holder.saturday.setChecked(dayList.get(5));
+                                holder.sunday.setChecked(dayList.get(6));
+
                                 service.submit(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ArrayList<Boolean> dayList = new ArrayList<>();
-                                        dayList.add(alarmSettingsLoader.isMonday());
-                                        dayList.add(alarmSettingsLoader.isTuesday());
-                                        dayList.add(alarmSettingsLoader.isWednesday());
-                                        dayList.add(alarmSettingsLoader.isThursday());
-                                        dayList.add(alarmSettingsLoader.isFriday());
-                                        dayList.add(alarmSettingsLoader.isSaturday());
-                                        dayList.add(alarmSettingsLoader.isSunday());
-
-                                        PeriodSetter periodSetter = new PeriodSetter(dayList, holder.setPeriodView.getText().toString(), context); //вроде все хоккей :)
-                                        dayList = periodSetter.managePeriod();
-                                        holder.monday.setChecked(dayList.get(0));
-                                        holder.tuesday.setChecked(dayList.get(1));
-                                        holder.wednesday.setChecked(dayList.get(2));
-                                        holder.thursday.setChecked(dayList.get(3));
-                                        holder.friday.setChecked(dayList.get(4));
-                                        holder.saturday.setChecked(dayList.get(5));
-                                        holder.sunday.setChecked(dayList.get(6));
-
                                         String sharedPrefsAlarmId = data.get(holder.getAdapterPosition()).getAlarmId();
                                         Map<String, ?> stringMap = JsonParser.Companion.getSharedPrefs(context);
                                         String value;
@@ -1244,12 +1246,15 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                 });
 
                             }
+
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+
                     }
                 }).create();
+
 
                 NumberPicker numberPicker1 = (NumberPicker) finalView.findViewById(R.id.numberPicker);
                 numberPicker1.setMaxValue(7);

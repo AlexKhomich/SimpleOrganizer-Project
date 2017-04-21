@@ -1,6 +1,7 @@
 package com.cdg.alex.simpleorganizer.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -22,6 +23,14 @@ class AlarmNotificationActivity : AppCompatActivity() {
         //запуск нового будильника
         val alarmServiceIntent = Intent(this, AlarmService::class.java)
         this.startService(alarmServiceIntent)
-        finish()
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask()
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity()
+            } else {
+                finish()
+            }
+        }
     }
 }

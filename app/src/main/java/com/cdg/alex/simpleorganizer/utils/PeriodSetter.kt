@@ -9,13 +9,6 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
     private var paramFlag: Boolean = false // флаг для определения использования первого или второго периода
     private var periodFlag: Boolean = false // флаг для проверки симметричности первого и второго параметров периода
-//    private val MONDAY: String = "monday"
-//    private val TUESDAY: String = "tuesday"
-//    private val WEDNESDAY: String = "wednesday"
-//    private val THURSDAY: String = "thursday"
-//    private val FRIDAY: String = "friday"
-//    private val SATURDAY: String = "saturday"
-//    private val SUNDAY: String = "sunday"
 
     //получение первого значения периода в виде числа
     private fun getFirstOption(): Int = splitString(0).toInt()
@@ -154,7 +147,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
         return temp
     }
-//    main function in this class
+//    main function for build new week
     fun buildNewPeriodWeek(alarmCounter: Int): ArrayList<Boolean> {
         var daysCounter: Int = 0
         val shiftValue = getShiftValue(alarmCounter)
@@ -163,7 +156,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 //        для разных значений периода
         if (paramFlag && periodFlag) {
 
-            for (i in 0..3) {                  //нужно придумать алгоритм вычисления кол-ва проходов!!!
+            for (i in 0..3) {                  //нужно оптимизировать алгоритм вычисления кол-ва проходов!!!
                 if (paramFlag) {
                     for (it in 0..getFirstOption() - 1) { //вычисления с первым параметром периода
                         newPeriodList.add(daysCounter, true)
@@ -180,7 +173,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
             }
         } else if (!paramFlag && periodFlag) {
 
-            for (i in 0..3) {                  //нужно придумать алгоритм вычисления кол-ва проходов!!!
+            for (i in 0..3) {
                 if (!paramFlag) {
                     for (it in 0..getSecondOption() - 1) { //вычисления со вторым параметром периода
                         newPeriodList.add(daysCounter, false)
@@ -202,7 +195,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
             daysCounter++
         }
 
-        for (i in 0..3) {                  //нужно придумать алгоритм вычисления кол-ва проходов!!!
+        for (i in 0..3) {
             if (paramFlag) {
                 for (it in 0..getSecondOption() - 1) { //вычисления со вторым параметром периода
                     newPeriodList.add(daysCounter, false)
@@ -220,90 +213,4 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
         return newPeriodList
     }
-
-    //    функция для считывания параметров из файла настроек (этот метод необходимо будет немного переделать, чтобы доставать дни из класса ServiceSettingsHolder)
-    /*private fun parseDay(witchDay: String, counter: Int): Boolean {
-        val allAlarmsList = JsonParser.getAllAlarms(context)
-        val result = allAlarmsList[counter]
-        val jsonObject = JSONObject(result)
-        val jsonArray = jsonObject.getJSONArray("settings")
-        var day = false
-        var isMonday = false
-        var isTuesday = false
-        var isWednesday = false
-        var isThursday = false
-        var isFriday = false
-        var isSaturday = false
-        var isSunday = false
-
-        when (witchDay) {
-            MONDAY -> try {
-                (0..jsonArray.length() - 1)
-                        .map { jsonArray.getJSONObject(it) }
-                        .forEach { isMonday = it.getBoolean(MONDAY) }
-                day = isMonday
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-            TUESDAY -> try {
-                (0..jsonArray.length() - 1)
-                        .map { jsonArray.getJSONObject(it) }
-                        .forEach { isTuesday = it.getBoolean(TUESDAY) }
-                day = isTuesday
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-            WEDNESDAY -> try {
-                (0..jsonArray.length() - 1)
-                        .map { jsonArray.getJSONObject(it) }
-                        .forEach { isWednesday = it.getBoolean(WEDNESDAY) }
-                day = isWednesday
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-            THURSDAY -> try {
-                (0..jsonArray.length() - 1)
-                        .map { jsonArray.getJSONObject(it) }
-                        .forEach { isThursday = it.getBoolean(THURSDAY) }
-                day = isThursday
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-            FRIDAY -> try {
-                (0..jsonArray.length() - 1)
-                        .map { jsonArray.getJSONObject(it) }
-                        .forEach { isFriday = it.getBoolean(FRIDAY) }
-                day = isFriday
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-            SATURDAY -> try {
-                (0..jsonArray.length() - 1)
-                        .map { jsonArray.getJSONObject(it) }
-                        .forEach { isSaturday = it.getBoolean(SATURDAY) }
-                day = isSaturday
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-            SUNDAY -> try {
-                (0..jsonArray.length() - 1)
-                        .map { jsonArray.getJSONObject(it) }
-                        .forEach { isSunday = it.getBoolean(SUNDAY) }
-                day = isSunday
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-        }
-
-        return day
-    }*/
-
-//сделать функцию записи в shared preferences
 }

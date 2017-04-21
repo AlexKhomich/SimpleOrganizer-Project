@@ -119,16 +119,19 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
 
         if (savedAlarm.dayOfWeek == -1 && savedAlarm.time.hours == 24 && savedAlarm.time.minutes == 60) {
             Log.i("Alarm state", "Alarm has been not installing")
-            calendar.set(Calendar.DAY_OF_WEEK, 2)
+            calendar.add(Calendar.DAY_OF_MONTH, getShiftDayOfMonth(getCurrentDayOfWeek(getCurrentDate())))
             calendar.set(Calendar.HOUR_OF_DAY, 0)
             calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 1)
             val restartServiceIfAlarmIsNotCreated = Intent(context, StartAlarmServiceReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, restartServiceIfAlarmIsNotCreated, PendingIntent.FLAG_UPDATE_CURRENT)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         } else {
-            if ((savedAlarm.dayOfWeek + 2) > 7 ) {
-                calendar.set(Calendar.DAY_OF_WEEK, 1)
+            if ((savedAlarm.dayOfWeek + 2) > 7) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1)
+//                calendar.set(Calendar.WEEK_OF_MONTH, calendar.get(Calendar.WEEK_OF_MONTH) + 1)
+//                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
                 calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
                 calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
             } else {
@@ -175,6 +178,20 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
         val argSplit: List<String> = regEx.split(":")
         val currentMinute: Int = argSplit[2].toInt()
         return currentMinute
+    }
+
+    fun getShiftDayOfMonth(currDay: Int): Int {
+        var temp: Int = 0
+        when (currDay) {
+            0 -> temp = 7
+            1 -> temp = 6
+            2 -> temp = 5
+            3 -> temp = 4
+            4 -> temp = 3
+            5 -> temp = 2
+            6 -> temp = 1
+        }
+        return temp
     }
 
 }

@@ -3,6 +3,7 @@ package com.cdg.alex.simpleorganizer.service
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.IBinder
 import com.cdg.alex.simpleorganizer.R
@@ -18,7 +19,10 @@ class MediaPlayerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val volume: Float = (sharedPreferences.getString("volume", "50").toFloat())/100
         mediaPlayer = MediaPlayer.create(this, R.raw.alarm_default)
+        mediaPlayer?.setVolume(volume, volume)
         mediaPlayer?.start()
 
         sendNotification()
