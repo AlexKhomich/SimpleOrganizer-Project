@@ -118,20 +118,21 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
         val savedAlarm: NextAlarmHolder = computeNextAlarm(context)
 
         if (savedAlarm.dayOfWeek == -1 && savedAlarm.time.hours == 24 && savedAlarm.time.minutes == 60) {
-            Log.i("Alarm state", "Alarm has been not installing")
-            calendar.add(Calendar.DAY_OF_MONTH, getShiftDayOfMonth(getCurrentDayOfWeek(getCurrentDate())))
+            calendar.add(Calendar.DAY_OF_YEAR, getShiftDayOfMonth(getCurrentDayOfWeek(getCurrentDate())))
             calendar.set(Calendar.HOUR_OF_DAY, 0)
             calendar.set(Calendar.MINUTE, 0)
-            calendar.set(Calendar.SECOND, 1)
-            val restartServiceIfAlarmIsNotCreated = Intent(context, StartAlarmServiceReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, restartServiceIfAlarmIsNotCreated, PendingIntent.FLAG_UPDATE_CURRENT)
+            calendar.set(Calendar.SECOND, 10)
+            val intent = Intent(context, StartAlarmServiceReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            Log.i("TAG", "Alarm has been installing for build new week")
         } else {
-            if ((savedAlarm.dayOfWeek + 2) > 7) {
+            if ((savedAlarm.dayOfWeek + 2) > 7 && getCurrentDayOfWeek(getCurrentDate()) != 6) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1)
-//                calendar.set(Calendar.WEEK_OF_MONTH, calendar.get(Calendar.WEEK_OF_MONTH) + 1)
-//                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+                calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
+                calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+            } else if ((savedAlarm.dayOfWeek + 2) > 7 && getCurrentDayOfWeek(getCurrentDate()) == 6) {
                 calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
                 calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
             } else {
@@ -139,6 +140,7 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
                 calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
                 calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
             }
+
             val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

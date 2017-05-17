@@ -1,48 +1,75 @@
 package com.cdg.alex.simpleorganizer.service
 
-import android.app.*
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.IBinder
+import android.support.v4.app.NotificationCompat
+import android.util.Log
 import com.cdg.alex.simpleorganizer.R
 import com.cdg.alex.simpleorganizer.activities.AlarmNotificationActivity
+import com.cdg.alex.simpleorganizer.timers.SilenceAfterTimer
+import java.util.*
 
 
 class MediaPlayerService : Service() {
 
+    private var songPath: String? = null
     private var mediaPlayer: MediaPlayer? = null
+    private var songURI: Uri? = null
 
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val sharedPreferences: SharedPreferences = this.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val volume: Float = (sharedPreferences.getString("volume", "50").toFloat())/100
-        mediaPlayer = MediaPlayer.create(this, R.raw.alarm_default)
+        val shPrefSettings: SharedPreferences = this.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val volume: Float = (shPrefSettings.getString("volume", "50").toFloat())/100
+        val silenceAfter: Long = shPrefSettings.getString("silence_after", "1").toLong()
+        val serviceParser: ServiceJsonParser = ServiceJsonParser()
+        songPath = serviceParser.getSoundPath(this)
+        val resultString: String? = songPath
+        Log.i("path", resultString)
+        if (resultString.equals("android.resource://com.cdg.alex.simpleorganizer/")) {
+            songURI = Uri.parse(resultString + R.raw.alarm_default)
+        } else songURI = Uri.parse(resultString)
+
+        mediaPlayer = MediaPlayer.create(this, songURI)
         mediaPlayer?.setVolume(volume, volume)
         mediaPlayer?.start()
 
         sendNotification()
 
+        val timer: Timer = Timer()
+        timer.schedule(SilenceAfterTimer(this), silenceAfter * 60_000)
+
         return START_NOT_STICKY
     }
 
     override fun onDestroy() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
+        if (mediaPlayer != null) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+        }
     }
 
-    fun sendNotification () {
-        val notif = Notification.Builder(this)
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
-                .setSmallIcon(R.drawable.ic_launcher)
+    fun sendNotification() {
+        val notif = NotificationCompat.Builder(this)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_access_alarms)
+                .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                 .setContentTitle("Alarm notification")
                 .setContentText("ALARM!!!")
                 .setAutoCancel(true)
-                .setDefaults(Notification.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.PRIORITY_MAX)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
 
         val resultIntent = Intent(this, AlarmNotificationActivity::class.java)
 // The stack builder object will contain an artificial back stack for the
@@ -60,5 +87,6 @@ class MediaPlayerService : Service() {
 // mId allows you to update the notification later on.
         mNotificationManager.notify(0, notif.build())
     }
-
 }
+
+

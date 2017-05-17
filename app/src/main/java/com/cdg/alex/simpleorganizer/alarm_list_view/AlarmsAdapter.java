@@ -1290,7 +1290,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                     t = t + " - " + tag.getFirst(FieldKey.TITLE);
                                     holder.setRingtoneView.setText(t);
                                     alarmSettingsLoader.setSetRingtoneView(t);
-                                    alarmSettingsLoader.setSoundPath(fileName);
+                                    alarmSettingsLoader.setSoundPath("file://" + fileName);
 
                                     service.submit(new Runnable() {
                                         @Override
@@ -1327,15 +1327,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                                         }
                                     });
 
-                                } catch (CannotReadException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (TagException e) {
-                                    e.printStackTrace();
-                                } catch (ReadOnlyFileException e) {
-                                    e.printStackTrace();
-                                } catch (InvalidAudioFrameException e) {
+                                } catch (CannotReadException | IOException | ReadOnlyFileException | TagException | InvalidAudioFrameException e) {
                                     e.printStackTrace();
                                 }
                                 Snackbar.make(view, fileName, Snackbar.LENGTH_SHORT).show();

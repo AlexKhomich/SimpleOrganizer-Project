@@ -29,17 +29,22 @@
             android:name=".service.MediaPlayerService"
             android:enabled="true"
             android:exported="true"
-            android:process=":media_player_service"></service>
+            android:process=":media_player_service" />
 
-        <receiver android:name=".receiver.AlarmReceiver"></receiver>
+        <receiver android:name=".receiver.AlarmReceiver" />
+        <receiver android:name=".receiver.StartAlarmServiceReceiver" />
 
         <activity
             android:name=".activities.AlarmNotificationActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.STOP" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".service.PeriodBuilderService"
-            android:exported="false"></service>
+            android:exported="false" />
     </application>
 
 </manifest>

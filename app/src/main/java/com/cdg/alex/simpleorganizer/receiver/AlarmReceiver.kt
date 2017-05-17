@@ -16,6 +16,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val mediaServiceIntent = Intent(context, MediaPlayerService::class.java)
 
         val alarmNotificationIntent = Intent(context, AlarmNotificationActivity::class.java)
+        alarmNotificationIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         context?.startService(mediaServiceIntent)
         context?.startActivity(alarmNotificationIntent)

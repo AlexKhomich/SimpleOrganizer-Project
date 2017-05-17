@@ -10,6 +10,9 @@
     <string name="alarms">Alarms</string>
     <string name="notes">Notes</string>
     <string name="back">back</string>
+    <string name="snooze">Snooze</string>
+    <string name="stop">Stop</string>
+    <string name="alarm">ALARM!!!</string>
 
     <string-array name="snoozeTimeItems">
         <item>1 min</item>

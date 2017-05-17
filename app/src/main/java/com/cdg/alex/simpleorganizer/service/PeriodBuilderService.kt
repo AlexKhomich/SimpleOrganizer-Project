@@ -2,6 +2,7 @@ package com.cdg.alex.simpleorganizer.service
 
 import android.app.IntentService
 import android.content.Intent
+import android.util.Log
 import com.cdg.alex.simpleorganizer.utils.PeriodSetterBuilder
 
 
@@ -13,6 +14,7 @@ class PeriodBuilderService : IntentService("PeriodBuilderService") {
         //start service for set new alarm in new week
         val alarmServiceIntent: Intent = Intent(this, AlarmService::class.java)
         this.startService(alarmServiceIntent)
+        Log.i("TAG", "Period builder service")
 
     }
 }

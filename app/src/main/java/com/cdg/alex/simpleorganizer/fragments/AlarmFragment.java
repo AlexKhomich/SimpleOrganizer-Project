@@ -46,7 +46,7 @@ public class AlarmFragment extends Fragment {
     private static int elementOfAlarm = 0;
     private final String ALARM_NAME = "alarm_";
     private String id = "alarm_";
-    private String defaultSong = "com.cdg.alex.alarmclock.res.row.alarm_default.mp3";
+    private String defaultSong = "android.resource://com.cdg.alex.simpleorganizer/";
     private final int PERMISSION_REQUEST_CODE = 1;
     private AlarmParser alarmParser;
 
