@@ -32,7 +32,7 @@ class MediaPlayerService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val shPrefSettings: SharedPreferences = this.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val volume: Float = (shPrefSettings.getString("volume", "50").toFloat())/100
-        val silenceAfter: Long = shPrefSettings.getString("silence_after", "1").toLong()
+        val silenceAfter: String = shPrefSettings.getString("silence_after", "1")
         val serviceParser: ServiceJsonParser = ServiceJsonParser()
         songPath = serviceParser.getSoundPath(this)
         val resultString: String? = songPath
@@ -48,7 +48,7 @@ class MediaPlayerService : Service() {
         sendNotification()
 
         val timer: Timer = Timer()
-        timer.schedule(SilenceAfterTimer(this), silenceAfter * 60_000)
+        timer.schedule(SilenceAfterTimer(this), getTimeFromString(silenceAfter) * 60_000)
 
         return START_NOT_STICKY
     }
@@ -86,6 +86,12 @@ class MediaPlayerService : Service() {
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 // mId allows you to update the notification later on.
         mNotificationManager.notify(0, notif.build())
+    }
+
+    fun getTimeFromString(str: String): Long {
+        val strArr: List<String> = str.split(" ")
+        val result: Long = strArr[0].toLong()
+        return result
     }
 }
 

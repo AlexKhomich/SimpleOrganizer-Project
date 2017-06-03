@@ -14,7 +14,7 @@ import com.cdg.alex.simpleorganizer.service.MediaPlayerService
 
 class AlarmNotificationActivity : AppCompatActivity() {
 
-    private val br: BroadcastReceiver? = null
+    private var br: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class AlarmNotificationActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val intentFilter: IntentFilter = IntentFilter("android.intent.action.STOP")
-        val br: BroadcastReceiver = object : BroadcastReceiver() {
+        br = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     finishAndRemoveTask()
@@ -40,8 +40,13 @@ class AlarmNotificationActivity : AppCompatActivity() {
         this.registerReceiver(br, intentFilter)
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
     override fun onStop() {
         super.onStop()
+        this.unregisterReceiver(br)
     }
 
     fun onStopAlarmRing(view: View) {
