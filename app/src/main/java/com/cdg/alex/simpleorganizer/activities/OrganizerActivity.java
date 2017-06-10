@@ -115,7 +115,7 @@ public class OrganizerActivity extends AppCompatActivity {
                 myFragment = AlarmFragment.newInstance(position);
 
             } else if (position == 2) {
-                myFragment = NoteFragment.newInstance(position);
+                myFragment = NoteFragment.Companion.newInstance(position);
 
             }
             return myFragment;

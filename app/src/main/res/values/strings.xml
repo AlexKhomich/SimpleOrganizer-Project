@@ -13,6 +13,10 @@
     <string name="snooze">Snooze</string>
     <string name="stop">Stop</string>
     <string name="alarm">ALARM!!!</string>
+    <string name="note_name">Note Name</string>
+    <string name="date_and_time">Date and time</string>
+    <string name="_8942">⋮</string>
+    <string name="note_preview">Note Preview</string>
 
     <string-array name="snoozeTimeItems">
         <item>1 min</item>

@@ -31,27 +31,25 @@ class PeriodSetterBuilder: SettingsToHolder {
             val dayList: ArrayList<Boolean> = ArrayList()
             val periodSetter = PeriodSetter(readSavedAlarms(context, i), readFromSettingsAndSaveToHolder(context)[i].period!!, context)
             dayList.addAll(periodSetter.buildNewPeriodWeek(i))
-            val jsonSettingsStringBuilder: JsonSettingsStringBuilder = JsonSettingsStringBuilder.Builder()
-                    .setTime(readFromSettingsAndSaveToHolder(context)[i].time.toString())
-                    .setPeriod(readFromSettingsAndSaveToHolder(context)[i].period.toString())
-                    .setRingtone(readFromSettingsAndSaveToHolder(context)[i].ringtone.toString())
-                    .setOnOfSwitch(readFromSettingsAndSaveToHolder(context)[i].isOnOrOf)
-                    .setMonday(dayList[0])
-                    .setTuesday(dayList[1])
-                    .setWednesday(dayList[2])
-                    .setThursday(dayList[3])
-                    .setFriday(dayList[4])
-                    .setSaturday(dayList[5])
-                    .setSunday(dayList[6])
-                    .setCheckPeriod(readFromSettingsAndSaveToHolder(context)[i].isPeriodChecked)
-                    .setAlarmId(readFromSettingsAndSaveToHolder(context)[i].id.toString())
-                    .setSoundPath(readFromSettingsAndSaveToHolder(context)[i].soundPath.toString()).build()
-            editor.putString(readFromSettingsAndSaveToHolder(context)[i].id.toString(), jsonSettingsStringBuilder.toString())
+            if (readFromSettingsAndSaveToHolder(context)[i].isPeriodChecked) { //for only enabled period!
+                val jsonSettingsStringBuilder: JsonSettingsStringBuilder = JsonSettingsStringBuilder.Builder()
+                        .setTime(readFromSettingsAndSaveToHolder(context)[i].time.toString())
+                        .setPeriod(readFromSettingsAndSaveToHolder(context)[i].period.toString())
+                        .setRingtone(readFromSettingsAndSaveToHolder(context)[i].ringtone.toString())
+                        .setOnOfSwitch(readFromSettingsAndSaveToHolder(context)[i].isOnOrOf)
+                        .setMonday(dayList[0])
+                        .setTuesday(dayList[1])
+                        .setWednesday(dayList[2])
+                        .setThursday(dayList[3])
+                        .setFriday(dayList[4])
+                        .setSaturday(dayList[5])
+                        .setSunday(dayList[6])
+                        .setCheckPeriod(readFromSettingsAndSaveToHolder(context)[i].isPeriodChecked)
+                        .setAlarmId(readFromSettingsAndSaveToHolder(context)[i].id.toString())
+                        .setSoundPath(readFromSettingsAndSaveToHolder(context)[i].soundPath.toString()).build()
+                editor.putString(readFromSettingsAndSaveToHolder(context)[i].id.toString(), jsonSettingsStringBuilder.toString())
+            }
         }
-
         editor.apply()
-
     }
-
-
 }
