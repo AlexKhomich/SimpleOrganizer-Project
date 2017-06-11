@@ -17,6 +17,10 @@
     <string name="date_and_time">Date and time</string>
     <string name="_8942">⋮</string>
     <string name="note_preview">Note Preview</string>
+    <string name="priority_note">Set priority</string>
+    <string name="delete_note">Delete</string>
+
+    <string name="test_card">We’re pleased to announce C++ B-Tree, a C++ template library that implements B-tree containers with an analogous interface to the standard STL map, set, multimap, and multiset containers. B-trees are well-known data structures for organizing secondary storage, because they are optimized for reading and writing large blocks of data. But the same property that makes B-trees appropriate for use with databases and file systems also makes them appropriate for use in main-memory, just with smaller blocks.</string>
 
     <string-array name="snoozeTimeItems">
         <item>1 min</item>
@@ -45,6 +49,12 @@
         <item>FRIDAY</item>
         <item>SATURDAY</item>
         <item>SUNDAY</item>
+    </string-array>
+
+    <string-array name="priorities">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>Height</item>
     </string-array>
 
 </resources>

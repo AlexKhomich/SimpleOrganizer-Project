@@ -23,9 +23,18 @@ import java.util.*
 
 class NoteFragment : Fragment() {
 
-    val mNotesList: ArrayList<NoteContainer> = ArrayList()
+    var mNotesList: ArrayList<NoteContainer> = ArrayList()
     var mRecyclerNotes: RecyclerView? = null
     var mNotesAdapter: NotesAdapter? = null
+
+    companion object {
+        fun newInstance(num: Int): NoteFragment {
+            val noteFragment = NoteFragment()
+            val args = Bundle()
+            noteFragment.arguments = args
+            return noteFragment
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -45,21 +54,12 @@ class NoteFragment : Fragment() {
             val currentTime = System.currentTimeMillis()
             val sdf: SimpleDateFormat = SimpleDateFormat("dd MMM, yyyy  HH:mm", Locale.getDefault())
             val dateAndTime: String = sdf.format(currentTime)
-            mNotesList.add(NoteContainer("First note", dateAndTime, "Hello from new test note ever!", NotePriority.LOW))
+            mNotesList.add(NoteContainer("Test note", dateAndTime, resources.getString(R.string.test_card), NotePriority.LOW))
             mNotesAdapter?.notifyDataSetChanged()
-            Snackbar.make(view, "New Note Added", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "New Note Added", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
         }
         // Inflate the layout for this fragment
         return v
-    }
-
-    companion object {
-        fun newInstance(num: Int): NoteFragment {
-            val noteFragment = NoteFragment()
-            val args = Bundle()
-            noteFragment.arguments = args
-            return noteFragment
-        }
     }
 }
