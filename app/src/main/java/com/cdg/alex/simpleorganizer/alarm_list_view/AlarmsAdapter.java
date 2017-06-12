@@ -1065,7 +1065,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
                 }
                 data.remove(holder.getAdapterPosition());
                 alarmSettingsMap.remove(alarmId);
-                notifyDataSetChanged();
+                notifyItemRemoved(holder.getAdapterPosition());
                 Snackbar.make(view, "Alarm has been deleted!", Snackbar.LENGTH_SHORT).show();
             }
         });

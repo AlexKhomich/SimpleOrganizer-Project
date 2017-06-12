@@ -19,9 +19,9 @@ import kotlinx.android.synthetic.main.card_note.view.*
  */
 class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(), AdapterView.OnItemClickListener {
 
-    var context: Context? = null
-    var mNotesHolderList: ArrayList<NoteContainer>? = null
-    var mNoteData: NoteContainer? = null
+    private var context: Context? = null
+    private var mNotesHolderList: ArrayList<NoteContainer>? = null
+    private var mNoteData: NoteContainer? = null
 
     constructor(context: Context, notesList: ArrayList<NoteContainer>) : this() {
         this.context = context
@@ -51,7 +51,7 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(),
                     R.id.delete_note -> {
                         Log.d("Note", "position: ${holder.adapterPosition}")
                         mNotesHolderList?.removeAt(holder.adapterPosition)
-                        notifyDataSetChanged()
+                        notifyItemRemoved(holder.adapterPosition)
                         false
                     }
                     R.id.set_priority -> {
@@ -63,9 +63,18 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(),
                                     val items = listView.checkedItemPosition
                                     val buffer = stringArray?.get(items)
                                     when (buffer) {
-                                        "Low" -> holder.imPriority?.setImageResource(R.drawable.pr_green)
-                                        "Medium" -> holder.imPriority?.setImageResource(R.drawable.pr_yellow)
-                                        "Height" -> holder.imPriority?.setImageResource(R.drawable.pr_red)
+                                        "Low" -> {
+                                            holder.imPriority?.setImageResource(R.drawable.pr_green)
+                                            mNoteData?.notePriority = NotePriority.LOW
+                                        }
+                                        "Medium" -> {
+                                            holder.imPriority?.setImageResource(R.drawable.pr_yellow)
+                                            mNoteData?.notePriority = NotePriority.MEDIUM
+                                        }
+                                        "Height" -> {
+                                            holder.imPriority?.setImageResource(R.drawable.pr_red)
+                                            mNoteData?.notePriority = NotePriority.HEIGHT
+                                        }
                                     }
                                 }).setNegativeButton("Cancel", { _, _ -> })
                         alertDialog.create().show()
@@ -86,7 +95,7 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(),
     }
 
     override fun getItemCount(): Int {
-        return mNotesHolderList!!.size
+        return mNotesHolderList?.size!!
     }
 
 

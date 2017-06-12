@@ -14,6 +14,7 @@ import com.cdg.alex.simpleorganizer.R
 import com.cdg.alex.simpleorganizer.notes_list.NoteContainer
 import com.cdg.alex.simpleorganizer.notes_list.NotePriority
 import com.cdg.alex.simpleorganizer.notes_list.NotesAdapter
+import org.jetbrains.anko.find
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,21 +37,20 @@ class NoteFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val v = inflater!!.inflate(R.layout.fragment_note, container, false)
-        val fab = v.findViewById(R.id.fabAddNotes) as FloatingActionButton
+        val v = inflater?.inflate(R.layout.fragment_note, container, false)
+        val fab = v?.find<FloatingActionButton>(R.id.fabAddNotes)
 
-        mRecyclerNotes = v.findViewById(R.id.noteRecyclerView) as RecyclerView
+        mRecyclerNotes = v?.find(R.id.noteRecyclerView)
         mNotesAdapter = NotesAdapter(context, mNotesList)
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        mRecyclerNotes!!.layoutManager = layoutManager
-        mRecyclerNotes!!.itemAnimator = DefaultItemAnimator()
-        mRecyclerNotes!!.adapter = mNotesAdapter
+        mRecyclerNotes?.layoutManager = layoutManager
+        mRecyclerNotes?.itemAnimator = DefaultItemAnimator()
+        mRecyclerNotes?.adapter = mNotesAdapter
 
-        fab.setOnClickListener { view ->
+        fab?.setOnClickListener { view ->
             val currentTime = System.currentTimeMillis()
             val sdf: SimpleDateFormat = SimpleDateFormat("dd MMM, yyyy  HH:mm", Locale.getDefault())
             val dateAndTime: String = sdf.format(currentTime)
