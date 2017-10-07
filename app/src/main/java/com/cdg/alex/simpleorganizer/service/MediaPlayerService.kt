@@ -41,6 +41,8 @@ class MediaPlayerService : Service() {
             songURI = Uri.parse(resultString + R.raw.alarm_default)
         } else songURI = Uri.parse(resultString)
 
+        // TODO: realise this function with RingtoneManager class.
+//        val ringtoneManager: Unit = RingtoneManager.setActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM, songURI)
         mediaPlayer = MediaPlayer.create(this, songURI)
         mediaPlayer?.setVolume(volume, volume)
         mediaPlayer?.start()

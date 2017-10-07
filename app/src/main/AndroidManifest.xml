@@ -45,6 +45,8 @@
         <service
             android:name=".service.PeriodBuilderService"
             android:exported="false" />
+
+        <activity android:name=".activities.NoteActivity"></activity>
     </application>
 
 </manifest>

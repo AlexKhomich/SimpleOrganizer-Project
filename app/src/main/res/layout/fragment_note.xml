@@ -7,6 +7,7 @@
     android:background="@color/colorPrimary">
 
     <android.support.v7.widget.RecyclerView
+        tools:layout="@layout/card_note"
         android:id="@+id/noteRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

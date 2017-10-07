@@ -59,6 +59,8 @@ class NoteFragment : Fragment() {
             Snackbar.make(view, "New Note Added", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
         }
+
+        (mNotesAdapter as NotesAdapter)
         // Inflate the layout for this fragment
         return v
     }

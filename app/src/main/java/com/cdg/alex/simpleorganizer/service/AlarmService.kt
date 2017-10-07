@@ -5,6 +5,7 @@ import android.app.IntentService
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import com.cdg.alex.simpleorganizer.receiver.AlarmReceiver
 import com.cdg.alex.simpleorganizer.receiver.StartAlarmServiceReceiver
@@ -125,26 +126,37 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
             val intent = Intent(context, StartAlarmServiceReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            }
             Log.i("TAG", "Alarm has been installing for build new week")
         } else {
             if ((savedAlarm.dayOfWeek + 2) > 7 && getCurrentDayOfWeek(getCurrentDate()) != 6) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1)
                 calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
                 calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+                calendar.set(Calendar.SECOND, 0)
             } else if ((savedAlarm.dayOfWeek + 2) > 7 && getCurrentDayOfWeek(getCurrentDate()) == 6) {
                 calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
                 calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+                calendar.set(Calendar.SECOND, 0)
             } else {
                 calendar.set(Calendar.DAY_OF_WEEK, savedAlarm.dayOfWeek + 2)
                 calendar.set(Calendar.HOUR_OF_DAY, savedAlarm.time.hours!!)
                 calendar.set(Calendar.MINUTE, savedAlarm.time.minutes!!)
+                calendar.set(Calendar.SECOND, 0)
             }
 
             val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            }
         }
     }
 

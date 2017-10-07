@@ -2,22 +2,25 @@ package com.cdg.alex.simpleorganizer.notes_list
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.PopupMenu
 import com.cdg.alex.simpleorganizer.R
+import com.cdg.alex.simpleorganizer.activities.NoteActivity
+import com.cdg.alex.simpleorganizer.db.NotesDB
+import io.realm.RealmChangeListener
 import kotlinx.android.synthetic.main.card_note.view.*
 
 /**
  * Created by alex on 03/06/17.
  */
-class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(), AdapterView.OnItemClickListener {
+class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(), RealmChangeListener<NotesDB> {
 
     private var context: Context? = null
     private var mNotesHolderList: ArrayList<NoteContainer>? = null
@@ -41,6 +44,11 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(),
         holder?.tvName?.text = mNoteData?.noteName
         holder?.tvDateAndTime?.text = mNoteData?.noteDateAndTime
         holder?.tvNotePrev?.text = mNoteData?.noteData
+
+        holder?.tvNotePrev?.setOnClickListener { _ ->
+            val intent = Intent(context, NoteActivity::class.java)
+            context?.startActivity(intent)
+        }
 
         val stringArray = context?.resources?.getStringArray(R.array.priorities)
         holder?.tvOptionDigit?.setOnClickListener { view ->
@@ -98,9 +106,8 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(),
         return mNotesHolderList?.size!!
     }
 
-
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onChange(t: NotesDB?) {
+        notifyDataSetChanged()
     }
 
 }
