@@ -1,12 +1,12 @@
 package com.cdg.alex.simpleorganizer.activities
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.*
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.cdg.alex.simpleorganizer.R
 import com.cdg.alex.simpleorganizer.receiver.AlarmReceiver
 import com.cdg.alex.simpleorganizer.service.AlarmService
@@ -23,8 +23,9 @@ class AlarmNotificationActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val intentFilter: IntentFilter = IntentFilter("android.intent.action.STOP")
+        val intentFilter = IntentFilter("android.intent.action.STOP")
         br = object : BroadcastReceiver() {
+            @SuppressLint("ObsoleteSdkInt")
             override fun onReceive(context: Context?, intent: Intent?) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     finishAndRemoveTask()
@@ -40,16 +41,13 @@ class AlarmNotificationActivity : AppCompatActivity() {
         this.registerReceiver(br, intentFilter)
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     override fun onStop() {
         super.onStop()
         this.unregisterReceiver(br)
     }
 
-    fun onStopAlarmRing(view: View) {
+    @SuppressLint("ObsoleteSdkInt")
+    fun onStopAlarmRing() {
         val intent = Intent(this, MediaPlayerService::class.java)
         this.stopService(intent)
         //запуск нового будильника
@@ -66,7 +64,8 @@ class AlarmNotificationActivity : AppCompatActivity() {
         }
     }
 
-    fun onClickSnooze(view: View) {
+    @SuppressLint("ObsoleteSdkInt")
+    fun onClickSnooze() {
         //should create function for set snooze time
         val shPrefSettings: SharedPreferences = this.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val timeOfSnnoze: Long = shPrefSettings.getString("time_of_snooze", "5").toLong()

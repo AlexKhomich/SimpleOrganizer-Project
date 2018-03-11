@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,18 +8,16 @@
 
 
     <TextClock
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/textClock"
-        android:textColor="#ffffff"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="90sp"
         android:timeZone="GMT+3"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:textSize="110sp" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,19 +36,20 @@
         android:textSize="60sp" />
 
     <CalendarView
+        android:id="@+id/calendarView"
+        style="@style/AppTheme"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/calendarView"
-        android:showWeekNumber="false"
-        android:background="#ffffff"
-        style="@style/AppTheme"
-        android:focusable="false"
-        android:firstDayOfWeek="@android:integer/config_mediumAnimTime"
-        android:nestedScrollingEnabled="true"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/textDate"
-        app:layout_constraintRight_toRightOf="parent"
+        android:background="#ffffff"
+        android:firstDayOfWeek="@android:integer/config_mediumAnimTime"
+        android:focusable="false"
+        android:nestedScrollingEnabled="true"
+        android:showWeekNumber="false"
+        android:theme="@android:style/Widget.Material.CalendarView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDate" />
 
 </android.support.constraint.ConstraintLayout>

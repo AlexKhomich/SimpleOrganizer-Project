@@ -1,4 +1,4 @@
-package com.cdg.alex.simpleorganizer.notes_list
+package com.cdg.alex.simpleorganizer.Notes.notes_list
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,16 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.PopupMenu
+import com.cdg.alex.simpleorganizer.Notes.Note
 import com.cdg.alex.simpleorganizer.R
 import com.cdg.alex.simpleorganizer.activities.NoteActivity
-import com.cdg.alex.simpleorganizer.db.NotesDB
 import io.realm.RealmChangeListener
 import kotlinx.android.synthetic.main.card_note.view.*
 
 /**
  * Created by alex on 03/06/17.
  */
-class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(), RealmChangeListener<NotesDB> {
+class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(), RealmChangeListener<Note> {
 
     private var context: Context? = null
     private var mNotesHolderList: ArrayList<NoteContainer>? = null
@@ -52,7 +52,7 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(),
 
         val stringArray = context?.resources?.getStringArray(R.array.priorities)
         holder?.tvOptionDigit?.setOnClickListener { view ->
-            val popupMenu: PopupMenu = PopupMenu(context, view)
+            val popupMenu = PopupMenu(context, view)
             popupMenu.inflate(R.menu.menu_notes)
             popupMenu.setOnMenuItemClickListener({ item: MenuItem? ->
                 when (item?.itemId) {
@@ -106,7 +106,7 @@ class NotesAdapter() : RecyclerView.Adapter<NotesAdapter.NoteContainerHolder>(),
         return mNotesHolderList?.size!!
     }
 
-    override fun onChange(t: NotesDB?) {
+    override fun onChange(t: Note?) {
         notifyDataSetChanged()
     }
 
