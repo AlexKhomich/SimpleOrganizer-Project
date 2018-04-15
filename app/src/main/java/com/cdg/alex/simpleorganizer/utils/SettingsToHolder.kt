@@ -12,7 +12,7 @@ interface SettingsToHolder {
         val settingsList = ArrayList<ServiceSettingsHolder>()
         val sjp = ServiceJsonParser()
 
-        for (i in 0..JsonParser.getNumberOfAlarms(context) - 1) {
+        for (i in 0 until JsonParser.getNumberOfAlarms(context)) {
             sjp.setIndexOfAlarm(i)
             val serviceSettingsHolder = ServiceSettingsHolder(sjp.getTime(context), sjp.getSwitchState(context), sjp.mondayState(context), sjp.tuesdayState(context), sjp.wednesdayState(context),
                     sjp.thursdayState(context), sjp.fridayState(context), sjp.saturdayState(context), sjp.sundayState(context), sjp.checkPeriod(context), sjp.getRingtone(context), sjp.getPeriod(context),

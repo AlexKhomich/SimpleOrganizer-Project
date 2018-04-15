@@ -27,7 +27,7 @@ class PeriodSetterBuilder: SettingsToHolder {
         val sharedPrefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor :SharedPreferences.Editor = sharedPrefs.edit()
 
-        for (i in 0..JsonParser.getNumberOfAlarms(context) - 1) {
+        for (i in 0 until JsonParser.getNumberOfAlarms(context)) {
             val dayList: ArrayList<Boolean> = ArrayList()
             val periodSetter = PeriodSetter(readSavedAlarms(context, i), readFromSettingsAndSaveToHolder(context)[i].period!!, context)
             dayList.addAll(periodSetter.buildNewPeriodWeek(i))

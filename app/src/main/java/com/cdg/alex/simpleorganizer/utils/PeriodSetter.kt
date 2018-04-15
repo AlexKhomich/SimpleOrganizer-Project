@@ -42,14 +42,14 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 
         //если изначально выбранный элемент не первый в списке, то забиваю предыдущие значения fals'ами
         if (i != 0) {
-            for (it in 0..i - 1) {
+            for (it in 0 until i) {
                 newList.add(it, false)
             }
         }
 
         //забиваю остальные позиции нужными значениями в соответствии с параметром "period"
         while (iterator.hasNext()) {
-            for (it in 0..getFirstOption() - 1) { //вычисления с первым параметром периода
+            for (it in 0 until getFirstOption()) { //вычисления с первым параметром периода
                 if (iterator.hasNext()) {
                     newList.add(i, true)
                     i++
@@ -57,7 +57,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
                 }
             }
 
-            for (it in 0..getSecondOption() - 1) { //вычисления со вторым параметром периода
+            for (it in 0 until getSecondOption()) { //вычисления со вторым параметром периода
                 if (iterator.hasNext()) {
                     newList.add(i, false)
                     i++
@@ -94,7 +94,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
 //        вычисление кол-ва дней для сдвига
         val z: Boolean = dayListFromSettings[k - 1]
         if (z) {
-            for (i in 0..getFirstOption() - 1) {
+            for (i in 0 until getFirstOption()) {
                 if (dayListFromSettings[k - 1]) {
                     temp++
                     if (iterator.hasPrevious()) {
@@ -119,7 +119,7 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
                 }
             }
         } else {
-            for (i in 0..getSecondOption() - 1) {
+            for (i in 0 until getSecondOption()) {
                 if (!dayListFromSettings[k - 1]) {
                     temp++
                     if (iterator.hasPrevious()) {
@@ -157,57 +157,57 @@ class PeriodSetter(private var dayList: ArrayList<Boolean>, private var period: 
         if (paramFlag && periodFlag) {
 
             for (i in 0..3) {                  //нужно оптимизировать алгоритм вычисления кол-ва проходов!!!
-                if (paramFlag) {
-                    for (it in 0..getFirstOption() - 1) { //вычисления с первым параметром периода
+                paramFlag = if (paramFlag) {
+                    for (it in 0 until getFirstOption()) { //вычисления с первым параметром периода
                         newPeriodList.add(daysCounter, true)
                         daysCounter++
                     }
-                    paramFlag = false
+                    false
                 } else {
-                    for (it in 0..getSecondOption() - 1) { //вычисления со вторым параметром периода
+                    for (it in 0 until getSecondOption()) { //вычисления со вторым параметром периода
                         newPeriodList.add(daysCounter, false)
                         daysCounter++
                     }
-                    paramFlag = true
+                    true
                 }
             }
         } else if (!paramFlag && periodFlag) {
 
             for (i in 0..3) {
-                if (!paramFlag) {
-                    for (it in 0..getSecondOption() - 1) { //вычисления со вторым параметром периода
+                paramFlag = if (!paramFlag) {
+                    for (it in 0 until getSecondOption()) { //вычисления со вторым параметром периода
                         newPeriodList.add(daysCounter, false)
                         daysCounter++
                     }
-                    paramFlag = true
+                    true
                 } else {
-                    for (it in 0..getFirstOption() - 1) { //вычисления с первым параметром периода
+                    for (it in 0 until getFirstOption()) { //вычисления с первым параметром периода
                         newPeriodList.add(daysCounter, true)
                         daysCounter++
                     }
-                    paramFlag = false
+                    false
                 }
             }
         }
 //        добавление кол-ва дней в зависимости от значения сдвига
-        for (i in 0..shiftValue - 1) {
+        for (i in 0 until shiftValue) {
             newPeriodList.add(daysCounter, paramFlag)
             daysCounter++
         }
 
         for (i in 0..3) {
-            if (paramFlag) {
-                for (it in 0..getSecondOption() - 1) { //вычисления со вторым параметром периода
+            paramFlag = if (paramFlag) {
+                for (it in 0 until getSecondOption()) { //вычисления со вторым параметром периода
                     newPeriodList.add(daysCounter, false)
                     daysCounter++
                 }
-                paramFlag = false
+                false
             } else {
-                for (it in 0..getFirstOption() - 1) { //вычисления с первым параметром периода
+                for (it in 0 until getFirstOption()) { //вычисления с первым параметром периода
                     newPeriodList.add(daysCounter, true)
                     daysCounter++
                 }
-                paramFlag = true
+                true
             }
         }
 

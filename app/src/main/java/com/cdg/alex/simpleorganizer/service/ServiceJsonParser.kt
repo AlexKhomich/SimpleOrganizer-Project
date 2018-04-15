@@ -18,7 +18,7 @@ class ServiceJsonParser: JsonParser() {
         var time: String = ""
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { time = it.getString("timeTextView") }
         return time
@@ -29,7 +29,7 @@ class ServiceJsonParser: JsonParser() {
         var ringtone: String = ""
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { ringtone = it.getString("setRingtoneView") }
         return ringtone
@@ -40,7 +40,7 @@ class ServiceJsonParser: JsonParser() {
         var period: String = ""
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { period = it.getString("setPeriodView") }
         return period
@@ -51,7 +51,7 @@ class ServiceJsonParser: JsonParser() {
         var switchState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { switchState = it.getBoolean("onOfSwitch") }
         return switchState
@@ -62,7 +62,7 @@ class ServiceJsonParser: JsonParser() {
         var mondayState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { mondayState = it.getBoolean("monday") }
         return mondayState
@@ -73,7 +73,7 @@ class ServiceJsonParser: JsonParser() {
         var tuesdayState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { tuesdayState = it.getBoolean("tuesday") }
         return tuesdayState
@@ -84,7 +84,7 @@ class ServiceJsonParser: JsonParser() {
         var wednesdayState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { wednesdayState = it.getBoolean("wednesday") }
         return wednesdayState
@@ -95,7 +95,7 @@ class ServiceJsonParser: JsonParser() {
         var thursdayState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { thursdayState = it.getBoolean("thursday") }
         return thursdayState
@@ -106,7 +106,7 @@ class ServiceJsonParser: JsonParser() {
         var fridayState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { fridayState = it.getBoolean("friday") }
         return fridayState
@@ -117,7 +117,7 @@ class ServiceJsonParser: JsonParser() {
         var saturdayState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { saturdayState = it.getBoolean("saturday") }
         return saturdayState
@@ -128,7 +128,7 @@ class ServiceJsonParser: JsonParser() {
         var sundayState: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { sundayState = it.getBoolean("sunday") }
         return sundayState
@@ -139,7 +139,7 @@ class ServiceJsonParser: JsonParser() {
         var id: String = ""
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { id = it.getString("id") }
         return id
@@ -150,7 +150,7 @@ class ServiceJsonParser: JsonParser() {
         var soundPath: String = ""
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { soundPath = it.getString("soundPath") }
         return soundPath
@@ -161,7 +161,7 @@ class ServiceJsonParser: JsonParser() {
         var checkPeriod: Boolean = false
         val jsonObject: JSONObject = JSONObject(result)
         val jsonArray: JSONArray = jsonObject.getJSONArray("settings")
-        (0..jsonArray.length() - 1)
+        (0 until jsonArray.length())
                 .map { jsonArray.getJSONObject(it) }
                 .forEach { checkPeriod = it.getBoolean("checkPeriod") }
         return checkPeriod

@@ -63,7 +63,7 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
        var nextAlarm: NextAlarmHolder
         val alarmHolderList = ArrayList<NextAlarmHolder>()
 
-        for (i in 0..readFromSettingsAndSaveToHolder(context).size - 1) {
+        for (i in 0 until readFromSettingsAndSaveToHolder(context).size) {
             if (getOnOfState(i)) {
                 val curHour = getCurrentHour(getCurrentDate())
                 val curMinute = getCurrentMinute(getCurrentDate())
@@ -71,7 +71,7 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
                 val alarmTime: AlarmTime = getTime(i)
                 val alarmDays: ArrayList<Boolean>  = getDaysList(i)
 
-                for (k in 0..alarmDays.size - 1) {
+                for (k in 0 until alarmDays.size) {
                     if (alarmDays[k] && k == curDay) {
                         if (curHour == alarmTime.hours) {
                             if (curMinute < alarmTime.minutes!!) {
@@ -95,7 +95,7 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
         if (alarmHolderList.isNotEmpty()) {
             nextAlarm = alarmHolderList[0]
             if (alarmHolderList.size > 1) {
-                for (i in 1..alarmHolderList.size - 1) {
+                for (i in 1 until alarmHolderList.size) {
                     if (nextAlarm.dayOfWeek == alarmHolderList[i].dayOfWeek) {
                         if (nextAlarm.time.hours == alarmHolderList[i].time.hours) {
                             if (nextAlarm.time.minutes!! > alarmHolderList[i].time.minutes!!){
@@ -184,14 +184,12 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
 
     fun getCurrentHour(regEx: String): Int {
         val argSplit: List<String> = regEx.split(":")
-        val currentHour: Int = argSplit[1].toInt()
-        return currentHour
+        return argSplit[1].toInt()
     }
 
     fun getCurrentMinute(regEx: String): Int {
         val argSplit: List<String> = regEx.split(":")
-        val currentMinute: Int = argSplit[2].toInt()
-        return currentMinute
+        return argSplit[2].toInt()
     }
 
     fun getShiftDayOfMonth(currDay: Int): Int {
