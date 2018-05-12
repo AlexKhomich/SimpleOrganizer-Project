@@ -59,7 +59,7 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
 
 
 
-    fun computeNextAlarm(context: Context): NextAlarmHolder { //all works good in this function
+    private fun computeNextAlarm(context: Context): NextAlarmHolder { //all works good in this function
        var nextAlarm: NextAlarmHolder
         val alarmHolderList = ArrayList<NextAlarmHolder>()
 
@@ -114,7 +114,7 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
         return nextAlarm
     }
 
-    fun setNextAlarmAndRunIt(context: Context) {
+    private fun setNextAlarmAndRunIt(context: Context) {
         val calendar = Calendar.getInstance()
         val savedAlarm: NextAlarmHolder = computeNextAlarm(context)
 
@@ -160,13 +160,13 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
         }
     }
 
-    fun getCurrentDate(): String {
+    private fun getCurrentDate(): String {
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("EEE:HH:mm", Locale.getDefault())
         return dateFormat.format(time)
     }
 
-    fun getCurrentDayOfWeek(regEx: String): Int {
+    private fun getCurrentDayOfWeek(regEx: String): Int {
         var temp: Int = 0
         val argSplit: List<String> = regEx.split(":")
         val dayOfWeek: String = argSplit[0]
@@ -182,17 +182,11 @@ class AlarmService : IntentService("AlarmService"), SettingsToHolder {
         return  temp
     }
 
-    fun getCurrentHour(regEx: String): Int {
-        val argSplit: List<String> = regEx.split(":")
-        return argSplit[1].toInt()
-    }
+    private fun getCurrentHour(regEx: String): Int = regEx.split(":")[1].toInt()
 
-    fun getCurrentMinute(regEx: String): Int {
-        val argSplit: List<String> = regEx.split(":")
-        return argSplit[2].toInt()
-    }
+    private fun getCurrentMinute(regEx: String): Int  = regEx.split(":")[2].toInt()
 
-    fun getShiftDayOfMonth(currDay: Int): Int {
+    private fun getShiftDayOfMonth(currDay: Int): Int {
         var temp: Int = 0
         when (currDay) {
             0 -> temp = 7

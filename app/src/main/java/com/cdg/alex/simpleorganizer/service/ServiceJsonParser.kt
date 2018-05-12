@@ -5,7 +5,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class ServiceJsonParser: JsonParser() {
-    //    здесь будут парситься строки, полученные из shared prefs и записываться в ServiceSettingsHolder
+    //    here strings, that was get from shared preferences, will be parsed and than it will be written to ServiceSettingsHolder
     private lateinit var result: String
     private var indexOfAlarm: Int = 0
 

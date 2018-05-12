@@ -27,11 +27,7 @@ abstract class JsonParser {
             return alarmMap
         }
 
-        fun getNumberOfAlarms(context: Context): Int {
-            val counter: Int = getAllAlarms(context).size
-            return counter
-        }
-
+        fun getNumberOfAlarms(context: Context): Int  = getAllAlarms(context).size
     }
 
 

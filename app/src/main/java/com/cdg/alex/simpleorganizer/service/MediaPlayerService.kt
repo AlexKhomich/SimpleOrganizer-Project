@@ -37,9 +37,9 @@ class MediaPlayerService : Service() {
         songPath = serviceParser.getSoundPath(this)
         val resultString: String? = songPath
         Log.i("path", resultString)
-        if (resultString.equals("android.resource://com.cdg.alex.simpleorganizer/")) {
-            songURI = Uri.parse(resultString + R.raw.alarm_default)
-        } else songURI = Uri.parse(resultString)
+        songURI = if (resultString.equals("android.resource://com.cdg.alex.simpleorganizer/")) {
+            Uri.parse(resultString + R.raw.alarm_default)
+        } else Uri.parse(resultString)
 
         // TODO: realise this function with RingtoneManager class.
 //        val ringtoneManager: Unit = RingtoneManager.setActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM, songURI)
@@ -62,7 +62,7 @@ class MediaPlayerService : Service() {
         }
     }
 
-    fun sendNotification() {
+    private fun sendNotification() {
         val notif = NotificationCompat.Builder(this)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_access_alarms)
@@ -90,11 +90,7 @@ class MediaPlayerService : Service() {
         mNotificationManager.notify(0, notif.build())
     }
 
-    fun getTimeFromString(str: String): Long {
-        val strArr: List<String> = str.split(" ")
-        val result: Long = strArr[0].toLong()
-        return result
-    }
+    private fun getTimeFromString(str: String): Long  = str.split(" ")[0].toLong()
 }
 
 

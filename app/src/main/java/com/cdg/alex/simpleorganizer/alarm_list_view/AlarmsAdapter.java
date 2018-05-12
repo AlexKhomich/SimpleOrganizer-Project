@@ -143,7 +143,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
         holder.setRingtoneView.setText(alarmSettingsLoader.getSetRingtoneView());
         holder.setPeriodView.setText(alarmSettingsLoader.getSetPeriodView());
 
-        //проверка на установленный чекбокс
+        //check on checked checkbox
         if (!(holder.checkPeriod.isChecked())) {
             holder.setPeriodView.setTextColor(context.getResources().getColor(R.color.color_not_active_text));
             holder.settingsButton.setImageDrawable(context.getDrawable(R.drawable.settings_not_active));
@@ -1037,7 +1037,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsSett
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                секция полностью рабочая!!!
+//                section works good!!!
                 String alarmId = data.get(holder.getAdapterPosition()).getAlarmId();
                 String id = "";
                 SharedPreferences sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);

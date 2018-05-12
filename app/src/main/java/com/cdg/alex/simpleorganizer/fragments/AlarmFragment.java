@@ -307,11 +307,6 @@ public class AlarmFragment extends Fragment {
                     defaultSong));
 
             AlarmSettingsLoader alarmSettingsLoader = dataList.get(numberOfAlarms - 1);
-            /*String json = "{\"settings\":[{\"timeTextView\":" + "\"" + alarmSettingsLoader.getTimeTextView() + "\"" + ",\"setPeriodView\":" + "\"" + alarmSettingsLoader.getSetPeriodView() + "\""
-                    + ",\"setRingtoneView\":" + "\"" + alarmSettingsLoader.getSetRingtoneView() + "\"" + ",\"onOfSwitch\":" + alarmSettingsLoader.isOnOfSwitch() + ",\"monday\":"
-                    + alarmSettingsLoader.isMonday() + ",\"tuesday\":" + alarmSettingsLoader.isTuesday() + ",\"wednesday\":" + alarmSettingsLoader.isWednesday()
-                    + ",\"thursday\":" + alarmSettingsLoader.isThursday() + ",\"friday\":" + alarmSettingsLoader.isFriday() + ",\"saturday\":" + alarmSettingsLoader.isSaturday()
-                    + ",\"sunday\":" + alarmSettingsLoader.isSunday() + ",\"checkPeriod\":" + alarmSettingsLoader.isCheckPeriod() + ",\"id\":" + "\"" + id + "\"" + ",\"soundPath\":" + "\"" + defaultSong + "\"" + "}]}";*/
 
             JsonSettingsStringBuilder jsonSettingsStringBuilder = new JsonSettingsStringBuilder.Builder().setTime(alarmSettingsLoader.getTimeTextView())
                     .setPeriod(alarmSettingsLoader.getSetPeriodView()).setRingtone(alarmSettingsLoader.getSetRingtoneView()).setOnOfSwitch(alarmSettingsLoader.isOnOfSwitch())

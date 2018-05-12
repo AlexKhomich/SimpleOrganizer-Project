@@ -90,11 +90,17 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         }
 
-//        старт сервиса будильника
+//        alarm service start section
         Intent alarmServiceIntent = new Intent(this, AlarmService.class);
         this.startService(alarmServiceIntent);
 
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //TODO: Need to set alarm after the back key has pressed
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

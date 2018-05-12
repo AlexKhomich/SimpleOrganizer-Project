@@ -200,18 +200,17 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
 
         int itemType = 0;
 
-        if (position == 0)
-           itemType =  ITEM_SILENCE_AFTER;
-
-         else if(position == 1)
-            itemType = ITEM_SNOOZE_TIME;
-
-         else if(position == 2)
-            itemType = ITEM_VIBRATE_WITH_SOUND;
-
-         else if(position == 3)
-            itemType = ITEM_VOLUME_CONTROL;
-
+        switch (position) {
+            case 0: itemType = ITEM_SILENCE_AFTER;
+            break;
+            case 1: itemType = ITEM_SNOOZE_TIME;
+            break;
+            case 2: itemType = ITEM_VIBRATE_WITH_SOUND;
+            break;
+            case 3: itemType = ITEM_VOLUME_CONTROL;
+            break;
+            default: break;
+        }
         return itemType;
     }
 
